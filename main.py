@@ -205,9 +205,3 @@ outf.write(scaffold)
 
 outf.close()
 
-#article_obj.print_quotes()
-
-#article_obj.print_stats()
-
-#article_obj.print_pns()
-
