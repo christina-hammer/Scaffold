@@ -9,8 +9,6 @@ from nltk import tokenize
 from nltk import pos_tag
 
 import sys
-#nltk.download()
-
 
 class Stat:
     
@@ -55,36 +53,47 @@ class Article:
             pn = ''.join(ch for ch in pn if ch not in punct)
             self.pronouns.add(pn)
 
-    def sentence_count(self):
-        return len(body)
+    def sentenceCount(self):
+        return len(self.body)
     
-    def stat_count(self):
-        return len(stats)
+    def statCount(self):
+        return len(self.stats)
     
-    def quote_count(self):
-        return len(quotes)
+    def quoteCount(self):
+        return len(self.quotes)
+    
+    def pnCount(self):
+        return len(self.pronouns)
     
     def show_full_line(self, quote_num):
-            print(self.body[quote_num], "[line: ", quote_num, "]","\n")  
+            return self.body[quote_num] + "[line: " + str(quote_num) + "]" + "\n" 
     
-    def print_quotes(self):
+    def writeQuotes(self):
+        outp = ""
         lines_to_print = set()
         for q in self.quotes:
             lines_to_print.add(q.line_num)
             #print(q.content, "[line: ", q.line_num, "]","\n")
             #print(self.body[q.line_num], "[line: ", q.line_num, "]","\n")
         for num in lines_to_print:
-            self.show_full_line(num)
+            outp = outp + self.show_full_line(num) + "\n\n"
+        return outp
     
-    def print_stats(self):
+    def writeStats(self):
+        outp = ""
         for s in self.stats:
-            print(s.content, "[line: ", s.line_num, "]","\n")
+            outp = outp + s.content+ "[line: "+ str(s.line_num) + "]"+ "\n\n"
+            #print(s.content, "[line: ", s.line_num, "]","\n")
+        return outp
             
-    def print_pns(self):
+    def writePns(self):
+        outp = ""
         sorted_pn = sorted(self.pronouns)
         for pn in sorted_pn:
-            print(pn)
-            
+            outp = outp + pn + "\n"
+            #outp = outp + '<a href="http://www.en.wikipedia.org/wiki/'+ pn +'"> '+ pn +'</a>'+ "\n"
+            #print(pn)
+        return outp    
     
     def provide_context(self, quote_line):
         if quote_line > 0:
@@ -168,21 +177,37 @@ def main_parse(article_file):
                     
         line_number = line_number + 1
         
-    return art
-                    
-    #print("====QUOTES====")
-    #art.print_quotes()
-    #print("====STATS====")
-    #art.print_stats()           
+    return art       
 
 
-title = input('Please eneter the name of the text file:')
+title = input('Please enter the name of the text file:')
 article_obj = main_parse(title)
 
-print("====QUOTES====")
-article_obj.print_quotes()
-print("====STATS====")
-article_obj.print_stats()
-print("====PEOPLE,=PLACES,=AND=THINGS====")
-article_obj.print_pns()
+of_name = input('Please the name of your Scaffold file:')
+
+outf = open(of_name, 'w')
+
+scaffold = "Total number of statements: " + str(article_obj.sentenceCount())+"\n\n"
+
+scaffold = scaffold + "====QUOTES====\n"
+scaffold = scaffold + "Total number of quotes:"+str(article_obj.quoteCount())+"\n\n"
+scaffold = scaffold + article_obj.writeQuotes() + "\n\n"
+
+scaffold = scaffold + "====STATS====\n"
+scaffold = scaffold + "Total number of stats:"+str(article_obj.statCount())+"\n\n"
+scaffold = scaffold + article_obj.writeStats() + "\n\n"
+
+scaffold = scaffold + "====PEOPLE,=PLACES,=AND=THINGS====\n"
+scaffold = scaffold + "Total number of proper nouns:"+str(article_obj.pnCount())+"\n\n"
+scaffold = scaffold + article_obj.writePns() + "\n\n"
+
+outf.write(scaffold)
+
+outf.close()
+
+#article_obj.print_quotes()
+
+#article_obj.print_stats()
+
+#article_obj.print_pns()
 
