@@ -23,12 +23,22 @@ class Token:
         #position within the phrase
         self.position = position
         self.confidence = 0.0
-        self.tag = ""
+        self.tag = None
+        
+        result = check_if_keyword(text)
+        if result is not None:
+            self.tag = result
+            self.text = text
+            return
+        
         
         self._parse_string(text)
         if not(self.tag == "PNC"):
             self._check_caps() 
         return
+    
+    def _check_if_keyword(self, text):        
+        return result = check_keywords(text)
             
     def _check_caps(self): 
         ##print(self.text + "\n")

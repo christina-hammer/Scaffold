@@ -1,9 +1,11 @@
 #Christina Hammer
-#Last Edit: 8/30/2017
+#Last Edit: 8/31/2017
 #helper_functions.py
 
 from Phrase import *
 from Token import *
+
+KEYWORDS = None
 
 ##credit to:
 ##https://stackoverflow.com/questions/354038/how-do-i-check-if-a-string-is-a-number-float
@@ -13,21 +15,39 @@ def is_digit_number(s):
         float(s)
         return True
     except ValueError:
-        return False
+        return False 
     
-def is_text_number(s):
-    s.lower()
-    #need to add more cases and also deal with hyphen situations thirty-three etc.
-    num_dic = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "hundred", "million", "billion", "trillion"}
+#this will actually load a json and save it as a dictionay. just populating a small dictionary right now as placeholder
+def load_keywords():
+    KEYWORDS = {"a.m.": "DT", "p.m.": "DT"}
+    return
+
+def close_keywords():
+    #close json
+    KEYWORDS = None
+    return
     
-    if s in num_dic:
-        return True
-    else:
-        return False
+def check_if_keyword(text):
+    if KEYWORDS == None:
+        load_keywords()
     
-#the only times that should be replaced with words are the ones below:
-def is_time_word(text):
-    return text in {"midnight", "noon"}
+    
+    
+    return 
+    
+#def is_text_number(s):
+    #s.lower()
+    ##need to add more cases and also deal with hyphen situations thirty-three etc.
+    #num_dic = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "hundred", "million", "billion", "trillion"}
+    
+    #if s in num_dic:
+        #return True
+    #else:
+        #return False
+    
+##the only times that should be replaced with words are the ones below:
+#def is_time_word(text):
+    #return text in {"midnight", "noon"}
 
 
 #small sample of common prepositions, articles, and coordinating conjunctions
@@ -43,7 +63,7 @@ def connected_proper_nouns(phrase, first_pn, second_pn):
             return False
     return True
 
-def phrase_string_to_phrase(phrase_string):
+def string_to_phrase(phrase_string):
         phrase = Phrase()
         tokenized_phrase = phrase_string.split()
         
