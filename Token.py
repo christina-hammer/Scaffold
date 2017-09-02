@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 8/30/2017
+#Last Edit: 8/31/2017
 #Token.py
 
 import sys
@@ -38,7 +38,7 @@ class Token:
         return
     
     def _check_if_keyword(self, text):        
-        return result = check_keywords(text)
+        return check_keywords(text)
             
     def _check_caps(self): 
         ##print(self.text + "\n")
