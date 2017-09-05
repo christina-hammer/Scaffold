@@ -1,5 +1,5 @@
 ##Chrstina Hammer 
-#Last Edit: 8/30/2017
+#Last Edit: 09/05/2017
 ##Scaffold.py
 
 ##holds the final breakdown, so to speak
@@ -8,17 +8,44 @@
 class Scaffold:
     
     def __init__(self):
-        self.locations = [] #ProperNouns
-        self.datetimes = [] #int position of phrases in text
-        self.people = [] #ProperNouns
-        self.general_proper_nouns = [] #ProperNouns
+        self.locations = {}        
+        self.people = {}
+        self.general_proper_nouns = {}
+        
         self.data_points = [] #int position of phrases in text
-        self.article = [] #strings
+        self.datetimes = [] #int position of phrases in text
         self.quotes = [] #int positions of phrases in the text
+        
+        self.article = [] #strings
         
         #return string of formatted results for printing/text files/general oggling
         def display(self):
-            return "Hmm maybe I'll write this function at some point.\n"
+            display_string = "PEOPLE:\n\n"
+            for p in self.people:
+                display_string = display_string + p + "\n"
+                
+            display_string = "\nLOCATIONS:\n\n"
+            for l in self.locations:
+                display_string = display_string + l + "\n"
+                
+            display_string = "\nSUBJECTS MENTIONED:\n\n"
+            for g in self.general_proper_noun:
+                display_string = display_string + g + "\n"
+                
+            display_string = "\nQUOTES:\n\n"
+            for q in self.quotes:
+                display_string = display_string + self.article[q] + " [Line "+ q +"]\n\n"
+                
+            display_string = "\nEVENT DATES & TIMES:\n\n"
+            for dt in self.datetimes:
+                display_string = display_string + self.article[dt] + " [Line "+ dt +"]\n\n"
+                
+
+            display_string = "\nDATA POINTS:\n\n"
+            for d in self.date_point:
+                display_string = display_string + self.article[d] + " [Line "+ d +"]\n\n"
+            
+            return display_string
         
         
         

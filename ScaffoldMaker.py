@@ -1,8 +1,8 @@
 #Christina Hammer 
-#Last Edit: 8/30/2017
+#Last Edit: 9/05/2017
 #ScaffoldMaker.py
 
-from CatProperNoun import *
+
 from Scaffold import *
 from ProperNounCategorizer import *
 from Token import *
@@ -13,8 +13,8 @@ from DateTimeIdentifier import *
 class ScaffoldMaker:    
     def __init__(self):
         self._general_proper_nouns = {}
-        self._person_proper_nouns = {}
-        self._location_proper_nouns = {}
+        self._people = {}
+        self._locations = {}
         self._token_categorizer = TokenCategorizer()
         
     def _run_categorizer(self, phrase):
@@ -27,18 +27,18 @@ class ScaffoldMaker:
         return
     
     def _add_loc(self, pn_entry, line_number):
-        if not(pn_entry in self.location_proper_nouns):
-            self.location_proper_nouns[pn_entry] = []
-        self.location_proper_nouns[pn_entry].append(line_number)        
+        if not(pn_entry in self._locations):
+            self._locations[pn_entry] = []
+        self._locations[pn_entry].append(line_number)        
         return 
     
     def _add_psn(self, full_name, lname, line_number):
-        if not(lname in self.person_proper_nouns):            
-            self.person_proper_nouns[lname] = {full_name : [line_number]}
-        elif not (full_name in self.person_proper_nouns[lname]):
-            self.person_proper_nouns[lname][full_name] = [line_number]
+        if not(lname in self._people):            
+            self._people[lname] = {full_name : [line_number]}
+        elif not (full_name in self._people[lname]):
+            self._people[lname][full_name] = [line_number]
         else:
-            self.person_proper_nouns[lname][full_name].append(line_number)
+            self._people[lname][full_name].append(line_number)
         return
     
     def _compile_proper_nouns(self, phrase, line_number):
@@ -95,11 +95,12 @@ class ScaffoldMaker:
         #construct 1 wp at a time to save on space
         load_keywords()
         for i in range(0, len(phrase_strings)):
+            scaffold.article.append(phrase_strings[i])
             phrase = self.string_to_phrase(phrase_strings[i])
             
             self._run_categorizer(phrase) #this should tag all tokens as well as noting quotes/numbers
             if not(phrase.proper_nouns.empty()):
-                self._compile_proper_nouns(phrase)
+                self._compile_proper_nouns(phrase, scaffold)
                 
             if phrase.is_data_point:
                 scaffold.data_points.append(i)
@@ -107,5 +108,16 @@ class ScaffoldMaker:
                 scaffold.datetimes.append(i)
             if phrase.is_quote:
                 scaffold.quotes.append(i)
+                
+        scaffold.people = self._people
+        self._people.clear()
+        
+        
+        scaffold.locations = self._locations
+        self._locations.clear()
+        
+        scaffold.general_proper_nouns = self._general_proper_nouns
+        self._general_proper_nouns.clear()  
+        
         close_keywords()
-        return article
+        return scaffold

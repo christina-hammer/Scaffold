@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 8/31/2017
+#Last Edit: 09/05/2017
 #helper_functions.py
 
 from Phrase import *
@@ -19,7 +19,8 @@ def is_digit_number(s):
     
 #this will actually load a json and save it as a dictionay. just populating a small dictionary right now as placeholder
 def load_keywords():
-    KEYWORDS = {"a.m.": "DT", "p.m.": "DT"}
+    # example dictionary: KEYWORDS = {"a.m.": "DT", "p.m.": "DT"}
+    KEYWORDS = {}
     return
 
 def close_keywords():
@@ -30,9 +31,6 @@ def close_keywords():
 def check_if_keyword(text):
     if KEYWORDS == None:
         load_keywords()
-    
-    
-    
     return 
     
 #def is_text_number(s):

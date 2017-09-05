@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 9/01/2017
+#Last Edit: 09/05/2017
 #TokenCategorizer.py
 
 from Token import *
@@ -13,7 +13,7 @@ class TokenCategorizor:
     def __init__(self):
                
         #default pass value
-        self.pass_value = .5
+        self.pass_value = 0
         
         self._proper_noun_cat = ProperNounCategorizer()
         self._number_context_identifier = NumberContextIdentifier()

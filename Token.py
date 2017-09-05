@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 8/31/2017
+#Last Edit: 09/05/2017
 #Token.py
 
 import sys
@@ -22,7 +22,7 @@ class Token:
         
         #position within the phrase
         self.position = position
-        self.confidence = 0.0
+        self.confidence = 0
         self.tag = None
         
         result = check_if_keyword(text)
@@ -31,8 +31,7 @@ class Token:
             self.text = text
             return
         
-        
-        self._parse_string(text)
+        self._strip_and_set_text(text)
         if not(self.tag == "PNC"):
             self._check_caps() 
         return
@@ -54,8 +53,9 @@ class Token:
         #write in logic to assign int for checking captialization
         return
     
+    
     ##take string given and 
-    def _parse_string(self, text):
+    def _strip_and_set_text(self, text):
         
         #strip out any punctuation occurring before  and after the word itself
         #ex: "Hey!" should result in r_p = " and l_p = !" and text = Hey
@@ -68,7 +68,7 @@ class Token:
             left_p = left_p+text[front]
             front = front + 1
             
-        ##if make it through the whole string without hitting any chars, it just *is* a punctuation mark
+        ##if make it through the whole string without hitting any chars, it is a punctuation makr or series of punctuation marks
         if front == len(text):
             self.text = left_p
             self.tag = "PNC"
@@ -83,7 +83,7 @@ class Token:
             right_p = text[back] + right_p
             back = back -1 
         
-        #text should be string given minus the beginning and end chopped off
+        #text should be string given minus the punctuation at the very beginning and end
         self.text = text[front:back+1]
         
         return

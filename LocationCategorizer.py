@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 9/01/2017
+#Last Edit: 09/05/2017
 #LocationCategorizer.py
 
 class NameCategorizer:
@@ -12,4 +12,4 @@ class NameCategorizer:
         return
     
     def check_confidence(self, text, phrase):
-        return (self.tag, 0)
+        return (None, 0)

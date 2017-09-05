@@ -32,12 +32,7 @@ def open_and_split_by_phrase(article_text_file_name):
 def write_output_to_file(of_name, scaffold):
     
     outf = open(of_name, 'w')
-        
-    ##make a string for the output contents by category that they will be in 
-    ##use article and all that jazz
     scaffold_output = scaffold.display()
-    #for p in phrase_strings:
-        #scaffold = scaffold + p + "\n"
         
     outf.write(scaffold)        
     outf.close() 

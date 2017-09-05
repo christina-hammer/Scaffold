@@ -1,6 +1,9 @@
 #Christina Hammer
-#Last Edit: 8/31/2017
+#Last Edit: 09/05/2017
 #NumberContextIdentifier.py
+
+
+from helper_function import *
 
 class NumberContextIdentifier:
     
@@ -8,4 +11,5 @@ class NumberContextIdentifier:
         return
     
     def tag_number(self, number):
-        return 
+        
+        return ("NTF", 0)
