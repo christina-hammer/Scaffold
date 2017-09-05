@@ -10,7 +10,7 @@ from LocationCategorizer import *
 from PersonCategorizer import *
 
 class ProperNounCategorizer:    
-    def __init__(self, pass_value):
+    def __init__(self):
             self._subcats = []
             self.tag = "GPN"
     
@@ -29,9 +29,9 @@ class ProperNounCategorizer:
             
         highest_confidence = (self.tag, self_confidence)
             
-        for sc in self.subcats:
-            hc_subcat = sc._highest_confidence(token, phrase)
-            if hc_subcat.second >= highest_confidence.second:
+        for sc in self._subcats:
+            hc_subcat = sc.highest_confidence(token, phrase)
+            if hc_subcat[1] >= highest_confidence[1]:
                 highest_confidence = hc_subcat
             
         return highest_confidence

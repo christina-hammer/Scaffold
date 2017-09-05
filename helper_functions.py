@@ -3,7 +3,7 @@
 #helper_functions.py
 
 from Phrase import *
-from Token import *
+from Token import Token
 
 KEYWORDS = None
 

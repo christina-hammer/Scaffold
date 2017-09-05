@@ -9,7 +9,7 @@ from helper_functions import *
 from NumberContextIdentifier import *
 
 #for tokens not yet found to be keywords or in a quoted title, this is is where the brunt of token categorization takes place
-class TokenCategorizor:    
+class TokenCategorizer:    
     def __init__(self):
                
         #default pass value
@@ -24,10 +24,10 @@ class TokenCategorizor:
         
         for t in phrase.tokens:
             if t.tag is None:
-                if is_digit(t.text[0]):
+                if is_digit_number(t.text[0]):
                     t.tag = self.number_context_identifier.tag_number()
                 elif t.caps > 0:
-                    self.proper_noun_cat.categorize_token(t, phrase)
+                    self._proper_noun_cat.highest_confidence(t, phrase, self.pass_value)
         
         return
         

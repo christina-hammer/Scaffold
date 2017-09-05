@@ -4,8 +4,8 @@
 
 import sys
 import string
-from Token import *
-from helper_functions import *
+#from helper_functions import check_if_keyword
+#from helper_functions import load_keywords
 
 class Token:    
     def __init__(self, text, position):
@@ -25,7 +25,9 @@ class Token:
         self.confidence = 0
         self.tag = None
         
-        result = check_if_keyword(text)
+        result = None
+        
+        #result = check_if_keyword(text)
         if result is not None:
             self.tag = result
             self.text = text
@@ -35,9 +37,6 @@ class Token:
         if not(self.tag == "PNC"):
             self._check_caps() 
         return
-    
-    def _check_if_keyword(self, text):        
-        return check_keywords(text)
             
     def _check_caps(self): 
         ##print(self.text + "\n")

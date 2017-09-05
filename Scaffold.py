@@ -19,33 +19,37 @@ class Scaffold:
         self.article = [] #strings
         
         #return string of formatted results for printing/text files/general oggling
-        def display(self):
-            display_string = "PEOPLE:\n\n"
-            for p in self.people:
-                display_string = display_string + p + "\n"
-                
-            display_string = "\nLOCATIONS:\n\n"
-            for l in self.locations:
-                display_string = display_string + l + "\n"
-                
-            display_string = "\nSUBJECTS MENTIONED:\n\n"
-            for g in self.general_proper_noun:
-                display_string = display_string + g + "\n"
-                
-            display_string = "\nQUOTES:\n\n"
-            for q in self.quotes:
-                display_string = display_string + self.article[q] + " [Line "+ q +"]\n\n"
-                
-            display_string = "\nEVENT DATES & TIMES:\n\n"
-            for dt in self.datetimes:
-                display_string = display_string + self.article[dt] + " [Line "+ dt +"]\n\n"
-                
-
-            display_string = "\nDATA POINTS:\n\n"
-            for d in self.date_point:
-                display_string = display_string + self.article[d] + " [Line "+ d +"]\n\n"
+    def display(self):
+        
+        display_string = "PEOPLE:\n\n"
+        for p in self.people:
+            display_string = display_string + p + "\n"
             
-            return display_string
+        display_string = display_string + "\nLOCATIONS:\n\n"
+        for l in self.locations:
+            display_string = display_string + l + "\n"
+            
+        display_string = display_string + "\nSUBJECTS MENTIONED:\n\n"
+        for g in self.general_proper_nouns:
+            display_string = display_string + g + "\n"
+            
+        display_string = display_string + "\nQUOTES:\n\n"
+        for q in self.quotes:
+            display_string = display_string + self.article[q] + " [Line "+ q +"]\n\n"
+            
+        display_string = display_string + "\nEVENT DATES & TIMES:\n\n"
+        for dt in self.datetimes:
+            display_string = display_string + self.article[dt] + " [Line "+ dt +"]\n\n"
+            
+
+        display_string = display_string + "\nDATA POINTS:\n\n"
+        for d in self.data_points:
+            display_string = display_string + self.article[d] + " [Line "+ d +"]\n\n"
+        
+        display_string = display_string + "\nORIGINAL ARTICLE:\n\n"
+        for p in self.article:
+            display_string = display_string + p + "\n"
+        return display_string
         
         
         

@@ -2,7 +2,7 @@
 #Last Edit: 09/05/2017
 #LocationCategorizer.py
 
-class NameCategorizer:
+class LocationCategorizer:
     
     def __init__(self):
         
@@ -11,5 +11,5 @@ class NameCategorizer:
         
         return
     
-    def check_confidence(self, text, phrase):
+    def highest_confidence(self, text, phrase):
         return (None, 0)

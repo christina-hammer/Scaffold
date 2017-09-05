@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 8/30/2017
+#Last Edit: 09/05/2017
 
 import nltk
 import string
@@ -29,12 +29,12 @@ def open_and_split_by_phrase(article_text_file_name):
     ##list of strings
     return phrase_strings
 
-def write_output_to_file(of_name, scaffold):
+def write_to_output_file(of_name, scaffold):
     
     outf = open(of_name, 'w')
     scaffold_output = scaffold.display()
         
-    outf.write(scaffold)        
+    outf.write(scaffold_output)        
     outf.close() 
         
     return
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     
     scaffold_maker = ScaffoldMaker()
     #takes in a list of strings (where each string is a phrase in the article)
-    scaffold = scaffold_maker.createScaffold(phrase_strings)    
+    scaffold = scaffold_maker.create_scaffold(phrase_strings)    
     
     write_to_output_file(of_name, scaffold)
     

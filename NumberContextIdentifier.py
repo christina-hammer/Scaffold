@@ -3,7 +3,9 @@
 #NumberContextIdentifier.py
 
 
-from helper_function import *
+from helper_functions import is_digit_number
+from helper_functions import check_if_keyword
+from helper_functions import load_keywords
 
 class NumberContextIdentifier:
     

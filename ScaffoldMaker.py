@@ -4,11 +4,10 @@
 
 
 from Scaffold import *
-from ProperNounCategorizer import *
-from Token import *
-from PhraseMaker import *
-from DateTimeIdentifier import *
-
+#from Token import *
+from TokenCategorizer import *
+#from Phrase import *
+from helper_functions import *
 
 class ScaffoldMaker:    
     def __init__(self):
@@ -45,6 +44,10 @@ class ScaffoldMaker:
         pn_entry = ""
         last_tag = ""
         for i in range(0, len(phrase.proper_nouns)+1):
+            if i == 0:
+                pn_entry = pn_entry + phrase.proper_nouns[i].text + " "
+                last_tag = phrase.proper_nouns[i].tag
+                continue                
             if i < len(phrase.proper_nouns):
                 if last_tag == "GTL":
                     self._add_gpn(pn_entry)
@@ -80,7 +83,7 @@ class ScaffoldMaker:
                 self._add_gpn(pn_entry, line_number)                
                 pn_entry = ""
             else:
-                print("Invalid Tag assignment " + phrase.tokens[wp.proper_nouns[i-1]].tag + " given to token: " + phrase.tokens[phrase.proper_nouns()[i-1]].text + "\n")
+                print("Invalid Tag assignment " + phrase.tokens[phrase.proper_nouns[i-1]].tag + " given to token: " + phrase.tokens[phrase.proper_nouns()[i-1]].text + "\n")
                 sys.exit("Cannot add proper noun object\n")
                 return  
             if i < len(phrase_.proper_nouns):
@@ -90,16 +93,16 @@ class ScaffoldMaker:
         return
         
     def create_scaffold(self, phrase_strings):
-        scaffold = Scaffold(self.phrase_strings)
+        scaffold = Scaffold()
         #phrase strings should be a list of strings of phrases that compose the article
         #construct 1 wp at a time to save on space
         load_keywords()
         for i in range(0, len(phrase_strings)):
             scaffold.article.append(phrase_strings[i])
-            phrase = self.string_to_phrase(phrase_strings[i])
+            phrase = string_to_phrase(phrase_strings[i])
             
             self._run_categorizer(phrase) #this should tag all tokens as well as noting quotes/numbers
-            if not(phrase.proper_nouns.empty()):
+            if not(len(phrase.proper_nouns) == 0):
                 self._compile_proper_nouns(phrase, scaffold)
                 
             if phrase.is_data_point:

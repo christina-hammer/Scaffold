@@ -12,5 +12,5 @@ class PersonCategorizer:
         self.confirmed_entries = []
         return
     
-    def check_confidence(self, text, phrase):
+    def highest_confidence(self, text, phrase):
         return (None, 0)
