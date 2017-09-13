@@ -1,126 +1,96 @@
 #Christina Hammer 
-#Last Edit: 9/05/2017
+#Last Edit: 9/13/2017
 #ScaffoldMaker.py
 
 
 from Scaffold import *
-#from Token import *
-from TokenCategorizer import *
-#from Phrase import *
+
+from Phrase import *
 from helper_functions import *
+
 
 class ScaffoldMaker:    
     def __init__(self):
-        self._general_proper_nouns = {}
-        self._people = {}
+        self._named_entities = {}
+        self._persons= {}
         self._locations = {}
-        self._token_categorizer = TokenCategorizer()
+        self._quotation = False
         
-    def _run_categorizer(self, phrase):
-            phrase = self._token_categorizer.categorize_tokens(phrase)
     
-    def _add_gpn(self, pn_entry, line_number):
-        if not(pn_entry in self._general_proper_nouns):            
-            self.general_proper_nouns[pn_entry] = []
-        self._general_proper_nouns[pn_entry].append(line_number)        
+    def _add_named_entity(self, new_entry, line_number):
+        if not(new_entry in self._named_entities):            
+            self._named_entities[new_entry] = []
+        self._named_entities[new_entry].append(line_number)        
         return
     
-    def _add_loc(self, pn_entry, line_number):
-        if not(pn_entry in self._locations):
-            self._locations[pn_entry] = []
-        self._locations[pn_entry].append(line_number)        
+    def _add_loc(self, new_entry, line_number):
+        if not(new_entry in self._locations):
+            self._locations[new_entry] = []
+        self._locations[new_entry].append(line_number)        
         return 
     
-    def _add_psn(self, full_name, lname, line_number):
-        if not(lname in self._people):            
-            self._people[lname] = {full_name : [line_number]}
-        elif not (full_name in self._people[lname]):
-            self._people[lname][full_name] = [line_number]
-        else:
-            self._people[lname][full_name].append(line_number)
+    def _add_psn(self, new_entry, line_number):
+        if not (new_entry in self._persons):
+            self._persons[new_entry] = []
+        self._persons[new_entry].append(line_number)
         return
     
-    def _compile_proper_nouns(self, phrase, line_number):
-        pn_entry = ""
-        last_tag = ""
-        for i in range(0, len(phrase.proper_nouns)+1):
-            if i == 0:
-                pn_entry = pn_entry + phrase.proper_nouns[i].text + " "
-                last_tag = phrase.proper_nouns[i].tag
-                continue                
-            if i < len(phrase.proper_nouns):
-                if last_tag == "GTL":
-                    self._add_gpn(pn_entry)
-                    last_tag = phrase.tokens[phrase.proper_nouns[i]].tag
-                    pn_entry = phrase.tokens[phrase.proper_nouns[i]].text
-                    continue
-                if last_tag == prase.tokens[phrase.proper_nouns[i]].tag:
-                    if not(phrase.proper_nouns[i-1]+1 == phrase.proper_nouns[i]):
-                        if connected_proper_nouns(phrase.tokens, prase.proper_nouns[i-1], phrase.proper_nouns[i]):
-                            for j in range(phrase.proper_nouns[i-1]+1, phrase.proper_nouns[i]+1):
-                                pn_entry = pn_entry + phrase.tokens[j] + " "
-                                continue
-                    else:
-                        pn_entry = pn_entry + phrase.proper_nouns[i].text + " "
-                        continue
-                        
-            if last_tag == "PSN":              
-                self._add_psn(pn_entry, phrase.tokens[wp.proper_nouns[i-1]].text, line_number)
-                pn_entry = ""
-            elif last_tag == "TTL":
-                #if title from last token attached to a name, make it part of a person PN
-                #if stray title with no name attached, not a specific person should be a GPN    
-                if i > len(phrase.proper_nouns): 
-                    self._add_gpn(pn_entry)                
-                    continue
-                if not(phrase.proper_nouns[i-1]+1 == phrase.proper_nouns[i]):
-                    self._add_gpn(pn_entry, line_number)
-                    pn_entry = ""
-            elif last_tag == "LOC":
-                self._add_loc(pn_entry, line_number)                
-                pn_entry = ""                
-            elif last_tag == "GPN":
-                self._add_gpn(pn_entry, line_number)                
-                pn_entry = ""
-            else:
-                print("Invalid Tag assignment " + phrase.tokens[phrase.proper_nouns[i-1]].tag + " given to token: " + phrase.tokens[phrase.proper_nouns()[i-1]].text + "\n")
-                sys.exit("Cannot add proper noun object\n")
-                return  
-            if i < len(phrase_.proper_nouns):
-                last_tag = phrase.tokens[phrase.proper_nouns[i]].tag
-                pn_entry = pn_entry + phrase.tokens[phrase.proper_nouns[i]].text + " "
-                     
-        return
+    def find_semantics(self, phrase, line_number):
         
-    def create_scaffold(self, phrase_strings):
+        phrase.is_quote = self._quotation
+        
+        for i in range(0, len(phrase.tokens)):
+            if phrase.tokens[i][1] == "GPE":
+                self._add_loc(phrase.tokens[i][0], line_number)
+            elif phrase.tokens[i][1] == "PERSON":
+                self._add_psn(phrase.tokens[i][0], line_number) 
+            elif phrase.tokens[i][1] == "NAMED_ENT":
+                self._add_named_entity(phrase.tokens[i][0], line_number)
+            elif phrase.tokens[i][1] == "CD":
+                if not phrase.is_date_time and not phrase.is_data_point:
+                    if value_is_date_time(phrase.tokens, i):
+                        phrase.is_date_time = True
+                    else:
+                        phrase.is_data_point = True
+            elif phrase.tokens[i][1] == "DATETIME":
+                phrase.value_is_date_time = True
+                
+            elif phrase.tokens[i][1] == "\"":
+                if not self._quotation:
+                    phrase.is_quote = True
+                self._quotation = not self._quotation                
+                
+        return phrase
+    
+        
+    def create_scaffold(self, ne_chunk_phrases):
         scaffold = Scaffold()
         #phrase strings should be a list of strings of phrases that compose the article
         #construct 1 wp at a time to save on space
-        load_keywords()
+
         for i in range(0, len(phrase_strings)):
-            scaffold.article.append(phrase_strings[i])
-            phrase = string_to_phrase(phrase_strings[i])
             
-            self._run_categorizer(phrase) #this should tag all tokens as well as noting quotes/numbers
-            if not(len(phrase.proper_nouns) == 0):
-                self._compile_proper_nouns(phrase, scaffold)
-                
+            scaffold.article.append(phrase_strings[i])
+            phrase = phrase_maker(phrase_strings[i])
+            
+            self.find_semantics(phrase, i)
+            
             if phrase.is_data_point:
                 scaffold.data_points.append(i)
             if phrase.is_date_time:
                 scaffold.datetimes.append(i)
             if phrase.is_quote:
                 scaffold.quotes.append(i)
+            
                 
         scaffold.people = self._people
-        self._people.clear()
-        
+        self._people.clear()       
         
         scaffold.locations = self._locations
         self._locations.clear()
         
         scaffold.general_proper_nouns = self._general_proper_nouns
         self._general_proper_nouns.clear()  
+        self.current_line = 0
         
-        close_keywords()
         return scaffold
