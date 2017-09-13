@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 09/08/2017
+#Last Edit: 09/12/2017
 
 #Code written using Mucho help from:
 #http://www.nltk.org/book/ch07.html
@@ -32,9 +32,15 @@ if __name__ == "__main__":
     ne_chunk_phrases = [nltk.ne_chunk(phrase) for phrase in tagged_phrases]
     
     named_entities = {}
-    NNP_non_ne = set()
+    pos_occurences = {}
     
+    test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    test_dt = str("out" + test_dt + ".txt")
+    out_file = open(test_dt, 'w')    
+    
+    #phrase is a tree or a tuple
     for phrase in ne_chunk_phrases:
+        out_file.write(str(phrase) + "\n")
         for token in phrase:
             if (type(token) is nltk.tree.Tree):
                 if token.label() not in named_entities:              
@@ -43,19 +49,16 @@ if __name__ == "__main__":
                 for t in token:
                     named_entities[token.label()].add(t)
             else:
-                if str(token[1]) == "NNP":                    
-                    NNP_non_ne.add(str(token[0]))
+                if token[1] not in pos_occurences:                    
+                    pos_occurences[token[1]] = set()
+                pos_occurences[token[1]].add(token[0])
                     
-    
-    test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-    test_dt = str("out" + test_dt + ".txt")
-    out_file = open(test_dt, 'w')
     
     for label in named_entities.keys():
         out_file.write(str(label)+": "+ str(named_entities[label]) + "\n")
         
-    
-    out_file.write("NNP (non named entities: )" + str(NNP_non_ne))
+    for pos in pos_occurences.keys():
+        out_file.write(pos + ": " + str(pos_occurences[pos]) + "\n")
     
     out_file.close()
     
