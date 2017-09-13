@@ -51,7 +51,3 @@ class Scaffold:
             display_string = display_string + p + "\n"
         return display_string
         
-        
-        
-        ##add display functions. or like, something that spits out strings that I can do 
-        ##shit with that breaks stuff into categories
