@@ -1,16 +1,16 @@
 ##Chrstina Hammer 
-#Last Edit: 09/05/2017
+#Last Edit: 09/13/2017
 ##Scaffold.py
 
-##holds the final breakdown, so to speak
-##this stores things. it can be added to. contents already added not intended to be edited
-##singleton
+#holds the final breakdown, so to speak
+#this stores things. it can be added to. contents already added not intended to be edited
+#singleton
 class Scaffold:
     
     def __init__(self):
         self.locations = {}        
         self.people = {}
-        self.general_proper_nouns = {}
+        self.named_entities = {}
         
         self.data_points = [] #int position of phrases in text
         self.datetimes = [] #int position of phrases in text
@@ -29,8 +29,8 @@ class Scaffold:
         for l in self.locations:
             display_string = display_string + l + "\n"
             
-        display_string = display_string + "\nSUBJECTS MENTIONED:\n\n"
-        for g in self.general_proper_nouns:
+        display_string = display_string + "\nNAMED ENTITIES:\n\n"
+        for g in self.named_entities:
             display_string = display_string + g + "\n"
             
         display_string = display_string + "\nQUOTES:\n\n"
