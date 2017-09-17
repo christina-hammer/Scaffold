@@ -60,3 +60,10 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+#local repo folders to ignore
+code_purgatory/
+input/
+manual_scaffolds/
+nltk_testing/
+output/
