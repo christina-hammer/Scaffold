@@ -20,7 +20,7 @@ if __name__ == "__main__":
     #takes in a list of strings (where each string is a phrase in the article)
     scaffold = scaffold_maker.create_scaffold(phrase_strings)    
     
-    write_to_output_file(scaffold)
+    #write_to_output_file(scaffold)
     
     
     

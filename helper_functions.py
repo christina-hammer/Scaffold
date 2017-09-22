@@ -67,10 +67,16 @@ def tree_to_tuple(ne_token):
     
     return (token_text, "NAMED_ENTITY")
 
-def phrase_maker(phrase_str):    
+def phrase_maker(phrase_str): 
+    
+    outf = open("output/" + "hyperloop_tagged_phrases.txt", 'a')
+    
     tokenized_phrase = nltk.word_tokenize(phrase_str)
     tagged_phrase = nltk.pos_tag(tokenized_phrase)
     ne_chunk_phrase = nltk.ne_chunk(tagged_phrase)
+    
+    outf.write(str(ne_chunk_phrase))
+    outf.close()
     
     tokens = [] #list of tagged tuples
     for token in ne_chunk_phrase:
