@@ -1,13 +1,45 @@
 #Christina Hammer
-#Last Edit: 09/12/2017
+#Last Edit: 09/26/2017
 
-#Code written using Mucho help from:
+#Code written using help from:
 #http://www.nltk.org/book/ch07.html
 
 import nltk
 import sys
 
 from datetime import datetime
+
+
+def is_nnp(token):
+    if (type(token) is nltk.tree.Tree):
+        for t in token:
+            if (t[1] == "NNP" or "NNPS"):
+                return True
+    else:
+        if (token[1] == "NNP" or "NNPS"):
+            return True
+    return False
+
+def find_multi_token_nnp(ne_chunk_phrase):
+    multi_token_nnp = []
+    leading_token = -1
+    
+    while(i < len(ne_chunk_phrase)):
+        if (i == (len(ne_chunk_phrase)-1)):
+            if (is_nnp(ne_chunk_phrase[i]) and leading_token > -1):
+                multi_token_nnp.append((leading_token, i))
+        else:
+            if (is_nnp(ne_chunk_phrase[i])):
+                if (is_nnp(ne_chunk_phrase[i+1])):
+                    if(leading_token == -1):
+                        leading_token = i
+                else:
+                    if (leading_token > -1):
+                        multi_token_nnp.append((leading_token, i))
+                        leading_token = -1
+        i = i + 1
+    
+    return multi_token_nnp
 
 if __name__ == "__main__":
     
@@ -34,8 +66,8 @@ if __name__ == "__main__":
     named_entities = {}
     pos_occurences = {}
     
-    test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-    test_dt = str("out" + test_dt + ".txt")
+    test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M")
+    test_dt = str("output/out" + test_dt + ".txt")
     out_file = open(test_dt, 'w')    
     
     #phrase is a tree or a tuple
