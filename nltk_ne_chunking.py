@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 09/27/2017
+#Last Edit: 10/01/2017
 
 #Code written using help from:
 #http://www.nltk.org/book/ch07.html
@@ -9,19 +9,22 @@ import sys
 
 from datetime import datetime
 
-def merge_tokensand_flatten(ne_chunk_tree, to_be_merged):
+#input: "ne_chunk_tree" - nltk tree of tuples and/or trees containing nltk tokens, "merge_tokens" - a list of int tuples
+#output: list of tuples/trees containing nltk tokens
+#purpose: merge tokens in ne_chunk_tree using index ranges listed in merge_tokens input arguement. flatten ne_chunk_tree from an nltk tree to a list
+def merge_tokens_and_flatten(ne_chunk_tree, merge_tokens):
     
     ne_chunk_list = []
     i = 0
     
-    while(len(to_be_merged) > 0):
-        if (i == to_be_merged[0][0]):
-            r = to_be_merged[0][0]
-            l = to_be_merged[0][1]
+    while(len(merge_tokens) > 0):
+        if (i == merge_tokens[0][0]):
+            r = merge_tokens[0][0]
+            l = merge_tokens[0][1]
             merge_text = ""
             merge_tag = "NNP"
             
-            while(r <= l):
+            while(l > r):                
                 if(type(ne_chunk_tree[r]) is nltk.tree.Tree):
                     if ((r == i or r == l) and merge_tag == "NNP"):
                         merge_tag = ne_chunk_tree[r].label()
@@ -29,11 +32,12 @@ def merge_tokensand_flatten(ne_chunk_tree, to_be_merged):
                         merge_text = merge_text + t[0] + " "
                 else:
                     merge_text = merge_text + ne_chunk_tree[r][0] + " "
+                r = r + 1
             
             ne_chunk_list.append((merge_text, merge_tag))
             merge_text = ""
             merge_tag = "NNP"
-            to_be_merged.pop(0)
+            merge_tokens.pop(0)
             i = l
         else:
             ne_chunk_list.append(ne_chunk_tree[i])
@@ -46,7 +50,9 @@ def merge_tokensand_flatten(ne_chunk_tree, to_be_merged):
     
     return ne_chunk_list
 
-
+#input: "token" - nltk POS tagged token or nltk tree composed of nltk POS-tokens
+#output: boolean value
+#purpose: indicate whether the given tuple or tree is a Proper Noun or plural Proper noun
 def is_nnp(token):
     if (type(token) is nltk.tree.Tree):
         for t in token:
@@ -57,14 +63,18 @@ def is_nnp(token):
             return True
     return False
 
+#input: "ne_chunk_tree" - an nltk tree containing tuples of nltk tokens and/or labeled trees of named entity chunks
+#output: a list of int tuples 
+#purpose: indicates the indices of tokens in the tree that should be merged into multi-token chunks
 def find_multi_token_nnp(ne_chunk_tree):
-    multi_token_nnp = []
+    merge_tokens = []
     leading_token = -1
+    i = 0
     
     while(i < len(ne_chunk_tree)):
         if (i == (len(ne_chunk_tree)-1)):
             if (is_nnp(ne_chunk_tree[i]) and leading_token > -1):
-                multi_token_nnp.append((leading_token, i))
+                merge_tokens.append((leading_token, i))
         else:
             if (is_nnp(ne_chunk_tree[i])):
                 if (is_nnp(ne_chunk_tree[i+1])):
@@ -72,11 +82,11 @@ def find_multi_token_nnp(ne_chunk_tree):
                         leading_token = i
                 else:
                     if (leading_token > -1):
-                        multi_token_nnp.append((leading_token, i))
+                        merge_tokens.append((leading_token, i))
                         leading_token = -1
         i = i + 1
     
-    return multi_token_nnp
+    return merge_tokens
 
 if __name__ == "__main__":
     
@@ -109,8 +119,8 @@ if __name__ == "__main__":
     pos_occurences = {}    
     
     for ne_chunk_tree in ne_chunk_trees:
-        to_be_merged= find_multi_token_nnp(ne_chunk_tree)
-        ne_chunk_list = merge_tokens_and_flatten(ne_chunk_tree, to_be_merged)
+        merge_tokens= find_multi_token_nnp(ne_chunk_tree)
+        ne_chunk_list = merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)
 
         out_file.write(str(phrase) + "\n")
         
