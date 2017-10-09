@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/02/2017
+#Last Edit: 10/08/2017
 
 #Code written using help from:
 #http://www.nltk.org/book/ch07.html
@@ -91,6 +91,9 @@ def find_multi_token_nnp(ne_chunk_tree):
     
     return merge_tokens
 
+#input: "ne_chunk_lists" - list of lists containing POS tagged nltk tokens
+#output: void return
+#purpose: creates a text file the lists tokens belonging to each POS category found in the input lists
 def create_output_file(ne_chunk_lists):
     
     test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M")
@@ -156,8 +159,8 @@ if __name__ == "__main__":
         ne_chunk_list = merge_tokens_and_flatten(ne_chunk_tree, merge_tokens) 
         ne_chunk_lists.append(ne_chunk_list)
     
-    #create_output_file(ne_chunk_lists)
+    create_output_file(ne_chunk_lists)
 
-        
+           
     
     
