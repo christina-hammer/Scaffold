@@ -1,12 +1,17 @@
 #Christina Hammer
-#Last Edit: 10/08/2017
+#Last Edit: 10/09/2017
 #helper_functions.py
+
+#This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
 
 import nltk
 import json
 from datetime import datetime
 import re
 
+#input: "infile" - string
+#output: list of strings
+#purpose: open file containing text article to be scaffolded and reads text into a list of of strings, seperated by phrase
 def open_and_split_by_phrase(in_file):
     
     try:
@@ -23,6 +28,9 @@ def open_and_split_by_phrase(in_file):
     #list of strings
     return phrase_strings
 
+#input: "scaffold" - Scaffold object
+#output: none
+#purpose: transfers content of scaffold object into a text file 
 def write_to_output_file(scaffold):
     
     test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
