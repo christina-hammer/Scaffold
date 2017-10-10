@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/09/2017
+#Last Edit: 10/08/2017
 #helper_functions.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -43,7 +43,10 @@ def write_to_output_file(scaffold):
     outf.close() 
         
     return
-  
+
+#input: none
+#output: dictionary of string,string pairs
+#purpose: populate a dictionary of keywords from a json file to be used in tagging  
 def load_keywords():
     #write code to load JSON file into dictionary    
     keyword_json = open("keywords.json")
