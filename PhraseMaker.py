@@ -11,7 +11,10 @@ class PhraseMaker:
     
     def __init__(self):
         self._keywords = load_keywords()
-        
+    
+    #input: "create_phrase" - string
+    #output: phrase object
+    #purpose: creates phrase object after tokenizing and tagging the words contained in the phrase string  
     def create_phrase(self, phrase_str): 
         
         tokenized_phrase = nltk.word_tokenize(phrase_str)
@@ -29,7 +32,7 @@ class PhraseMaker:
                 if (token[0] in self._keywords):                
                     token = (token[0], self._keywords[token[0]])                
                 tokens.append(token)
-                
+        print(tokens);
         phrase = Phrase(tokens)    
         return phrase 
     
@@ -114,9 +117,15 @@ class PhraseMaker:
         
         return merge_tokens    
     
+    #input: "token_text" - string
+    #output: bool
+    #purpose: confirm whether a given string is present in the set of valid month words     
     def _month_used_as_gpe(self, token_text):
         return token_text in {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
     
+    #input: "ne_token" - nltk tree
+    #output: tuple containing string, string pair
+    #purpose:   
     def _tree_to_tuple(self, ne_token):
         
         token_text = ""

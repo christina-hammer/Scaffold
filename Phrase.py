@@ -14,3 +14,4 @@ class Phrase:
         self.is_quote = False        
         self.is_data_point = False
         self.is_date_time = False
+        
