@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/08/2017
+#Last Edit: 10/11/2017
 
 from Scaffold import *
 from ScaffoldMaker import *
@@ -17,9 +17,3 @@ if __name__ == "__main__":
     scaffold = scaffold_maker.create_scaffold(phrase_strings)    
     
     write_to_output_file(scaffold)
-<<<<<<< HEAD
-    
-    
-    
-=======
->>>>>>> 26e444ec1a5ccd11f2f8afead90bf4077223b415
