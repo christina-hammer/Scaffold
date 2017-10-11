@@ -145,4 +145,3 @@ class PhraseMaker:
                 return (token_text, ne_token.label())
         
         return (token_text, "NAMED_ENTITY")    
-       
