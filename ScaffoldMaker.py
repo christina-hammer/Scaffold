@@ -1,12 +1,11 @@
 #Christina Hammer 
-#Last Edit: 9/17/2017
+#Last Edit: 10/08/2017
 #ScaffoldMaker.py
 
 
 from Scaffold import *
 from Phrase import *
-from helper_functions import *
-
+from PhraseMaker import *
 
 class ScaffoldMaker:    
     def __init__(self):
@@ -15,6 +14,7 @@ class ScaffoldMaker:
         self._locations = {}
         self._quotation = False
         self._longest_entry = 0
+        self._phrase_maker = PhraseMaker()
         
     
     def _add_named_entity(self, new_entry, line_number):
@@ -42,6 +42,24 @@ class ScaffoldMaker:
         self._persons[new_entry[0]][1].append(line_number)
         return
     
+    def _am_pm_follows(self, tokens, index):
+        if index > (len(tokens) - 2):
+            return False
+        return tokens[index + 1][0] == "p.m." or tokens[index + 1][0] == "a.m."
+        
+    
+    def _value_is_date_time(self, tokens, index):
+        #non-round hour times
+        if self._am_pm_follows(tokens, index):
+            if re.search("/d:/d/d", (tokens[index][0])):
+                return True
+            if 0 < float(tokens[index][0]) and float(tokens[index][0]) < 13:        
+                return True  
+        elif re.match("/d/d/d/d", tokens[index][0]):
+            return True
+        
+        return False     
+    
     def find_semantics(self, phrase, line_number):
         
         phrase.is_quote = self._quotation
@@ -54,13 +72,13 @@ class ScaffoldMaker:
             elif phrase.tokens[i][1] == "PERSON":
                 
                 self._add_psn(phrase.tokens[i][0], line_number) 
-            elif phrase.tokens[i][1] == "NAMED_ENTITY":
+            elif phrase.tokens[i][1] == "NAMED_ENTITY" or phrase.tokens[i][1] == "NNP":
                 
                 self._add_named_entity(phrase.tokens[i][0], line_number)
             elif phrase.tokens[i][1] == "CD":
                 
                 if not phrase.is_date_time and not phrase.is_data_point:
-                    if value_is_date_time(phrase.tokens, i):
+                    if self._value_is_date_time(phrase.tokens, i):
                         phrase.is_date_time = True
                     else:
                         phrase.is_data_point = True
@@ -81,7 +99,7 @@ class ScaffoldMaker:
         for i in range(0, len(phrase_strings)):
             
             scaffold.article.append(phrase_strings[i])
-            phrase = phrase_maker(phrase_strings[i])
+            phrase = self._phrase_maker.create_phrase(phrase_strings[i])
             
             self.find_semantics(phrase, i)
             
