@@ -11,8 +11,6 @@ if __name__ == "__main__":
     
     phrase_strings = open_and_split_by_phrase(in_file_name)
     
-    print("ahhhhh")
-    
     scaffold_maker = ScaffoldMaker()
         
     #takes in a list of strings (where each string is a phrase in the article)
