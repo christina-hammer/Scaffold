@@ -26,7 +26,7 @@ def load_keywords():
 #output: tuple containing string, string pair
 #purpose:   
 def tree_to_tuple(ne_token):
-    
+    #
     token_text = ""
     
     #weed out false positives from capitalized NN tokens at beginning of sentences
@@ -37,7 +37,10 @@ def tree_to_tuple(ne_token):
         for i in range(0, (len(ne_token)-1)):
             token_text = str(ne_token[i][0]) + " "           
         
-        lname = ne_token[len(ne_token)-1][0]        
+        lname = ne_token[len(ne_token)-1][0] 
+        if (token_text == ""):
+            return (lname, ne_token.label())
+        
         return ((lname, token_text), ne_token.label())
         
     for t in ne_token:
@@ -63,7 +66,7 @@ def tagged_token_list(phrase_str, keywords):
     tokenized_phrase = nltk.word_tokenize(phrase_str)
     tagged_phrase = nltk.pos_tag(tokenized_phrase)
     ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
-    
+    #print(ne_chunk_tree)
     merge_tokens = find_multi_token_nnp(ne_chunk_tree) 
     ne_chunk_list = merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
     
@@ -112,6 +115,9 @@ def merge_tokens_and_flatten(ne_chunk_tree, merge_tokens):
                     merge_text = merge_text + ne_chunk_tree[l][0] + " "
                 l = l + 1
             
+            if (merge_text[len(merge_text)-1] == " "):
+                merge_text = merge_text[:-1]
+                
             ne_chunk_list.append((merge_text, merge_tag))
             merge_text = ""
             merge_tag = "NNP"
@@ -206,9 +212,9 @@ if __name__ == "__main__":
     ne_chunk_lists = []
     
     for phrase in phrases:
-        ne_chunk_lists.append(tagged_token_list(phrase, keywords))
-
-    
+        t = tagged_token_list(phrase, keywords)
+        ne_chunk_lists.append(t)
+        
     create_output_file(ne_chunk_lists)
 
            
