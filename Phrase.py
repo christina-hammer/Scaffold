@@ -1,4 +1,4 @@
-#Christina Hammer (unless otherwise credited)
+#Christina Hammer
 #Last Edit: 9/13/2017
 
 import sys

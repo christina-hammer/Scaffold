@@ -64,7 +64,15 @@ class PhraseMaker:
                         merge_text = merge_text + ne_chunk_tree[l][0] + " "
                     l = l + 1
                 
-                ne_chunk_list.append((merge_text, merge_tag))
+                if (merge_text[len(merge_text)-1] == " "):
+                    merge_text = merge_text[:-1]              
+                
+                if (merge_tag == "PERSON" ):
+                    name = merge_text.rsplit(" ", 1)
+                    ne_chunk_list.append(((name[1], name[0]), merge_tag))
+                else: 
+                    ne_chunk_list.append((merge_text, merge_tag))
+                    
                 merge_text = ""
                 merge_tag = "NNP"
                 merge_tokens.pop(0)
@@ -138,7 +146,11 @@ class PhraseMaker:
             for i in range(0, (len(ne_token)-1)):
                 token_text = str(ne_token[i][0]) + " "           
             
-            lname = ne_token[len(ne_token)-1][0]        
+            lname = ne_token[len(ne_token)-1][0]
+            
+            if (token_text == ""):
+                return (lname, ne_token.label())
+            
             return ((lname, token_text), ne_token.label())
             
         for t in ne_token:
