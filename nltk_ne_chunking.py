@@ -1,13 +1,88 @@
 #Christina Hammer
-#Last Edit: 10/08/2017
+#Last Edit: 10/12/2017
 
 #Code written using help from:
 #http://www.nltk.org/book/ch07.html
 
 import nltk
 import sys
+import json
 
 from datetime import datetime
+
+#input: none
+#output: dictionary of string,string pairs
+#purpose: populate a dictionary of keywords from a json file to be used in tagging  
+def load_keywords():
+    #write code to load JSON file into dictionary    
+    keyword_json = open("keywords.json")
+    keyword_string = keyword_json.read() 
+    keywords_ = {}
+    keywords_.update(json.loads(keyword_string))
+    
+    return keywords_
+
+#input: "ne_token" - nltk tree
+#output: tuple containing string, string pair
+#purpose:   
+def tree_to_tuple(ne_token):
+    
+    token_text = ""
+    
+    #weed out false positives from capitalized NN tokens at beginning of sentences
+    if len(ne_token) == 1 and ne_token[0][1] == "NN":
+        return (ne_token[0][0], "NN")
+        
+    if ne_token.label() == "PERSON":        
+        for i in range(0, (len(ne_token)-1)):
+            token_text = str(ne_token[i][0]) + " "           
+        
+        lname = ne_token[len(ne_token)-1][0]        
+        return ((lname, token_text), ne_token.label())
+        
+    for t in ne_token:
+        token_text = token_text + str(t[0]) + " "    
+    
+    token_text = token_text[:-1]
+
+    if ne_token.label() == "GPE":
+        if month_used_as_gpe(token_text):
+            
+            return (token_text, "DATETIME")
+        else:
+            return (token_text, ne_token.label())
+    
+    return (token_text, "NAMED_ENTITY")    
+
+#input: "phrase_str" - string, "keywords" - dictionary of string, string pairs
+#output: list of tuples of strings
+#purpose: creates lists of tagged tokens from input of phrase in the form of a string
+#meant to work out tagging/ne_chunking logic for PhraseMaker class in Scaffold code
+def tagged_token_list(phrase_str, keywords):   
+    
+    tokenized_phrase = nltk.word_tokenize(phrase_str)
+    tagged_phrase = nltk.pos_tag(tokenized_phrase)
+    ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
+    
+    merge_tokens = find_multi_token_nnp(ne_chunk_tree) 
+    ne_chunk_list = merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
+    
+    tokens = [] #list of tagged tuples
+    for token in ne_chunk_list:
+        if type(token) is nltk.tree.Tree:            
+            tokens.append(tree_to_tuple(token))
+        else:
+            if (token[0] in keywords):                 
+                token = (token[0], keywords[token[0]])                
+            tokens.append(token)
+       
+    return tokens 
+
+#input: "token_text" - string
+#output: bool
+#purpose: confirm whether a given string is present in the set of valid month words     
+def month_used_as_gpe(token_text):
+    return token_text in {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
 
 #input: "ne_chunk_tree" - nltk tree of tuples and/or trees containing nltk tokens, "merge_tokens" - a list of int tuples
 #output: list of tuples/trees containing nltk tokens
@@ -29,8 +104,8 @@ def merge_tokens_and_flatten(ne_chunk_tree, merge_tokens):
                 
                 if(type(ne_chunk_tree[l]) is nltk.tree.Tree):
                     if ((l == i or l == r) and merge_tag == "NNP"):
-                        merge_tag = ne_chunk_tree[r].label()
-                    for t in ne_chunk_tree[r]:
+                        merge_tag = ne_chunk_tree[l].label()
+                    for t in ne_chunk_tree[l]:
                         merge_text = merge_text + t[0] + " "
                 else:
                     #print(merge_text + " + " + str(ne_chunk_tree[r]))
@@ -98,32 +173,11 @@ def create_output_file(ne_chunk_lists):
     
     test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M")
     test_dt = str("output/out" + test_dt + ".txt")
-    out_file = open(test_dt, 'w') 
-    
-    named_entities = {}
-    pos_occurences = {}        
+    out_file = open(test_dt, 'a')       
     
     
-    for ne_chunk_list in ne_chunk_lists:
-                              
-        for token in ne_chunk_list:         
-            if (type(token) is nltk.tree.Tree):
-                if token.label() not in named_entities:              
-                    named_entities[token.label()] = set()
-                    
-                for t in token:
-                    named_entities[token.label()].add(t)
-            else:
-                if token[1] not in pos_occurences:                    
-                    pos_occurences[token[1]] = set()
-                pos_occurences[token[1]].add(token[0])
-                    
-    
-    for label in named_entities.keys():
-        out_file.write(str(label)+": "+ str(named_entities[label]) + "\n")
-        
-    for pos in pos_occurences.keys():
-        out_file.write(pos + ": " + str(pos_occurences[pos]) + "\n")
+    for ne_chunk_list in ne_chunk_lists:                              
+        out_file.write(str(ne_chunk_list) + "\n")
     
     out_file.close()    
     
@@ -146,18 +200,14 @@ if __name__ == "__main__":
     
     phrases = nltk.sent_tokenize(in_file)
     
-    
-    tokenized_phrases = [nltk.word_tokenize(phrase) for phrase in phrases]
-    tagged_phrases = [nltk.pos_tag(phrase) for phrase in tokenized_phrases]
-    ne_chunk_trees = [nltk.ne_chunk(phrase) for phrase in tagged_phrases]
+    keywords = load_keywords()
     
     
     ne_chunk_lists = []
     
-    for ne_chunk_tree in ne_chunk_trees:        
-        merge_tokens = find_multi_token_nnp(ne_chunk_tree) 
-        ne_chunk_list = merge_tokens_and_flatten(ne_chunk_tree, merge_tokens) 
-        ne_chunk_lists.append(ne_chunk_list)
+    for phrase in phrases:
+        ne_chunk_lists.append(tagged_token_list(phrase, keywords))
+
     
     create_output_file(ne_chunk_lists)
 
