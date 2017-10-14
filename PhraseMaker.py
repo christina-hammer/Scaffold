@@ -32,7 +32,7 @@ class PhraseMaker:
                 if (token[0] in self._keywords):                
                     token = (token[0], self._keywords[token[0]])                
                 tokens.append(token)
-        print(tokens);
+        
         phrase = Phrase(tokens)    
         return phrase 
     
