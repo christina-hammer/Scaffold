@@ -23,3 +23,9 @@ Furthermore, Scaffold can be utilized if the user is composing a presentation or
 Non-goals
 -----------
 Scaffold is not designed to summarize the text, elucidate the purpose of a text, or replace reading the full text of an article.
+
+More Info and Updates
+---------------------
+
+Blog: https://scaffoldproject.blogspot.com/
+Questions: christinaelizabethhammer@gmail.com
