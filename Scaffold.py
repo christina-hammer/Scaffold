@@ -1,5 +1,5 @@
 #Chrstina Hammer 
-#Last Edit: 09/17/2017
+#Last Edit: 10/20/2017
 #Scaffold.py
 
 #holds the final breakdown, so to speak
@@ -18,39 +18,49 @@ class Scaffold:
         
         self.article = [] #strings
         
-        self.longest_entry = 30
+        self.longest_entry = 30 #default, used to format display string
+    
+    #input: "configuration" - set of characters indicating which attributes of scaffold should be added to the display string (p = people, l = locations, n = named entities, q = quotes, t = dats/times, d = data points, a = original article). If no configuration specified, all attributes will be included in the display string
+    #output: string of formatted results for printing/text files/general oggling
+    #purpose: output a string containing the information from the atttributes of the Scaffold object
+    def display(self, configuration):
         
-        #return string of formatted results for printing/text files/general oggling
-    def display(self):
+        print_all = (len(configuration) == 0) #bool
         
-        display_string = "PEOPLE:\n\n"
+        display_string = ""
+        if ("p" in configuration or print_all):            
+            display_string = display_string  + "PEOPLE:\n\n"            
+            for p in self.persons:
+                display_string = display_string + self.persons[p][0] + p + " "*(self.longest_entry + 4 - (len(p) + len(self.persons[p][0]))) + "Lines "+ str(self.persons[p][1]) + "\n"
+                
+        if ("l" in configuration or print_all):  
+            display_string = display_string + "\nLOCATIONS:\n\n"        
+            for l in self.locations:
+                display_string = display_string + l + " "*(self.longest_entry + 4 - len(l)) + "Lines "+ str(self.locations[l]) + "\n"
         
-        for p in self.persons:
-            display_string = display_string + self.persons[p][0] + p + " "*(self.longest_entry + 4 - (len(p) + len(self.persons[p][0]))) + "Lines "+ str(self.persons[p][1]) + "\n"
-            
-        display_string = display_string + "\nLOCATIONS:\n\n"
+        if ("n" in configuration or print_all):    
+            display_string = display_string + "\nNAMED ENTITIES:\n\n"
+            for n in self.named_entities:
+                display_string = display_string + n + " "*(self.longest_entry + 4 - len(n)) + "Lines "+ str(self.named_entities[n]) + "\n"
         
-        for l in self.locations:
-            display_string = display_string + l + " "*(self.longest_entry + 4 - len(l)) + "Lines "+ str(self.locations[l]) + "\n"
+        if ("q" in configuration or print_all):    
+            display_string = display_string + "\nQUOTES:\n\n"
+            for q in self.quotes:
+                display_string = display_string + str(self.article[q]) + " [Line "+ str(q) +"]\n\n"
             
-        display_string = display_string + "\nNAMED ENTITIES:\n\n"
-        for n in self.named_entities:
-            display_string = display_string + n + " "*(self.longest_entry + 4 - len(n)) + "Lines "+ str(self.named_entities[n]) + "\n"
+        if ("t" in configuration or print_all):   
+            display_string = display_string + "\nEVENT DATES & TIMES:\n\n"
+            for dt in self.datetimes:
+                display_string = display_string + str(self.article[dt]) + " [Line "+ str(dt) +"]\n\n"
             
-        display_string = display_string + "\nQUOTES:\n\n"
-        for q in self.quotes:
-            display_string = display_string + self.article[q] + " [Line "+ str(q) +"]\n\n"
-            
-        display_string = display_string + "\nEVENT DATES & TIMES:\n\n"
-        for dt in self.datetimes:
-            display_string = display_string + self.article[dt] + " [Line "+ str(dt) +"]\n\n"
-            
-
-        display_string = display_string + "\nDATA POINTS:\n\n"
-        for d in self.data_points:
-            display_string = display_string + self.article[d] + " [Line "+ str(d) +"]\n\n"
+        if ("d" in configuration or print_all):   
+            display_string = display_string + "\nDATA POINTS:\n\n"
+            for d in self.data_points:
+                display_string = display_string + str(self.article[d]) + " [Line "+ str(d) +"]\n\n"
         
-        display_string = display_string + "\nORIGINAL ARTICLE:\n\n"
-        for i in range(0, len(self.article)):
-            display_string = display_string + str(i) + ". " + self.article[i] + "\n"
+        if ("a" in configuration or print_all):   
+            display_string = display_string + "\nORIGINAL ARTICLE:\n\n"
+            for i in range(0, len(self.article)):
+                display_string = display_string + str(i) + ". " + str(self.article[i]) + "\n"
+                
         return display_string

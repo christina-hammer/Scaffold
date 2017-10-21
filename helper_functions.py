@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/08/2017
+#Last Edit: 10/20/2017
 #helper_functions.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -37,7 +37,8 @@ def write_to_output_file(scaffold):
     of_name = str("scaffold" + test_dt + ".txt")
     
     outf = open("output/" + of_name, 'w')
-    scaffold_output = scaffold.display()
+    config = set()
+    scaffold_output = scaffold.display(config)
     
     outf.write(scaffold_output)        
     outf.close() 

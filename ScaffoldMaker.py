@@ -1,5 +1,5 @@
 #Christina Hammer 
-#Last Edit: 10/14/2017
+#Last Edit: 10/20/2017
 #ScaffoldMaker.py
 
 
@@ -107,9 +107,11 @@ class ScaffoldMaker:
         scaffold = Scaffold()
         for i in range(0, len(phrase_strings)):
             
-            scaffold.article.append(phrase_strings[i])
+            #scaffold.article.append(phrase_strings[i])
+            
             phrase = self._phrase_maker.create_phrase(phrase_strings[i])
             
+            scaffold.article.append(phrase.tokens)
             self.find_semantics(phrase, i)
             
             if phrase.is_data_point:

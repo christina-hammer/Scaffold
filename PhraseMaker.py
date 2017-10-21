@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/09/2017
+#Last Edit: 10/14/2017
 #PhraseMaker.py
 
 from Phrase import *
@@ -69,6 +69,7 @@ class PhraseMaker:
                 
                 if (merge_tag == "PERSON" ):
                     name = merge_text.rsplit(" ", 1)
+                    name[0] = name[0] + " "
                     ne_chunk_list.append(((name[1], name[0]), merge_tag))
                 else: 
                     ne_chunk_list.append((merge_text, merge_tag))
