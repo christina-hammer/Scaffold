@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/20/2017
+#Last Edit: 10/22/2017
 #helper_functions.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -38,6 +38,10 @@ def write_to_output_file(scaffold):
     
     outf = open("output/" + of_name, 'w')
     config = set()
+    config.add("p")
+    config.add("l")
+    config.add("n")
+    config.add("a")
     scaffold_output = scaffold.display(config)
     
     outf.write(scaffold_output)        
@@ -50,9 +54,10 @@ def write_to_output_file(scaffold):
 #purpose: populate a dictionary of keywords from a json file to be used in tagging  
 def load_keywords():
     #write code to load JSON file into dictionary    
-    keyword_json = open("keywords.json")
+    keyword_json = open("keywords.json", encoding = 'utf8')
     keyword_string = keyword_json.read() 
     keywords_ = {}
     keywords_.update(json.loads(keyword_string))
+    
     
     return keywords_

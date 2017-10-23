@@ -1,11 +1,12 @@
 #Christina Hammer
-#Last Edit: 10/14/2017
+#Last Edit: 10/20/2017
 #PhraseMaker.py
 
 from Phrase import *
 import nltk
 import re
 from helper_functions import *
+import string
 
 class PhraseMaker:
     
@@ -30,7 +31,7 @@ class PhraseMaker:
                 tokens.append(self._tree_to_tuple(token))
             else:
                 if (token[0] in self._keywords):                
-                    token = (token[0], self._keywords[token[0]])                
+                    token = (token[0], self._keywords[token[0]])
                 tokens.append(token)
         
         phrase = Phrase(tokens)    
