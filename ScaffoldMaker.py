@@ -1,5 +1,5 @@
 #Christina Hammer 
-#Last Edit: 10/08/2017
+#Last Edit: 10/20/2017
 #ScaffoldMaker.py
 
 
@@ -12,9 +12,9 @@ class ScaffoldMaker:
         self._named_entities = {}
         self._persons= {}
         self._locations = {}
-        self._quotation = False
-        self._longest_entry = 0
-        self._phrase_maker = PhraseMaker()
+        self._quotation = False #whether the phrase being added is part of a same multi-line quotation 
+        self._longest_entry = 0 #keeping track of longest Proper Noun chunk for formatting reasons
+        self._phrase_maker = PhraseMaker() 
         
     
     def _add_named_entity(self, new_entry, line_number):
@@ -34,6 +34,16 @@ class ScaffoldMaker:
         return 
     
     def _add_psn(self, new_entry, line_number):
+        #print(str(new_entry) + " : " + str(type(new_entry)))
+        if (type(new_entry) is str):
+            #print("check0")
+            if not(new_entry in self._persons):
+                self._add_named_entity(new_entry, line_number)
+                return
+            else:
+                self._persons[new_entry][1].append(line_number)
+                return
+            
         if (len(new_entry[0]) + len(new_entry[1])) > self._longest_entry:
             self._longest_entry = (len(new_entry[0]) + len(new_entry[1]))  
             
@@ -66,17 +76,16 @@ class ScaffoldMaker:
         
         for i in range(0, len(phrase.tokens)):
             
-            if phrase.tokens[i][1] == "GPE":
-                
+            if phrase.tokens[i][1] == "GPE":                
                 self._add_loc(phrase.tokens[i][0], line_number)
-            elif phrase.tokens[i][1] == "PERSON":
                 
+            elif phrase.tokens[i][1] == "PERSON":                
                 self._add_psn(phrase.tokens[i][0], line_number) 
-            elif phrase.tokens[i][1] == "NAMED_ENTITY" or phrase.tokens[i][1] == "NNP":
                 
+            elif phrase.tokens[i][1] == "NAMED_ENTITY" or phrase.tokens[i][1] == "NNP":                
                 self._add_named_entity(phrase.tokens[i][0], line_number)
-            elif phrase.tokens[i][1] == "CD":
                 
+            elif phrase.tokens[i][1] == "CD":                
                 if not phrase.is_date_time and not phrase.is_data_point:
                     if self._value_is_date_time(phrase.tokens, i):
                         phrase.is_date_time = True
@@ -99,8 +108,10 @@ class ScaffoldMaker:
         for i in range(0, len(phrase_strings)):
             
             scaffold.article.append(phrase_strings[i])
+            
             phrase = self._phrase_maker.create_phrase(phrase_strings[i])
             
+            #scaffold.article.append(phrase.tokens)
             self.find_semantics(phrase, i)
             
             if phrase.is_data_point:
@@ -109,7 +120,8 @@ class ScaffoldMaker:
                 scaffold.datetimes.append(i)
             if phrase.is_quote:
                 scaffold.quotes.append(i)
-            
+                
+        #print(self._persons)
         scaffold.persons.update(self._persons)
         self._persons.clear()       
         

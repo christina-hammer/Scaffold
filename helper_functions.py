@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/08/2017
+#Last Edit: 10/23/2017
 #helper_functions.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -8,6 +8,7 @@ import nltk
 import json
 from datetime import datetime
 import re
+import codecs
 
 #input: "infile" - string
 #output: list of strings
@@ -15,7 +16,7 @@ import re
 def open_and_split_by_phrase(in_file):
     
     try:
-        f = open(in_file)
+        f = codecs.open(in_file, "r", encoding = 'utf-8', errors = 'ignore')
     except IOError:
         sys.exit("Cannot Open File")
     try:    
@@ -37,7 +38,12 @@ def write_to_output_file(scaffold):
     of_name = str("scaffold" + test_dt + ".txt")
     
     outf = open("output/" + of_name, 'w')
-    scaffold_output = scaffold.display()
+    config = set()
+    #config.add("p")
+    #config.add("l")
+    #config.add("n")
+    #config.add("a")
+    scaffold_output = scaffold.display(config)
     
     outf.write(scaffold_output)        
     outf.close() 
@@ -49,9 +55,10 @@ def write_to_output_file(scaffold):
 #purpose: populate a dictionary of keywords from a json file to be used in tagging  
 def load_keywords():
     #write code to load JSON file into dictionary    
-    keyword_json = open("keywords.json")
+    keyword_json = open("keywords.json", encoding = 'utf8')
     keyword_string = keyword_json.read() 
     keywords_ = {}
     keywords_.update(json.loads(keyword_string))
+    
     
     return keywords_

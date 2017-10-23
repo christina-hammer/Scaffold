@@ -1,17 +1,21 @@
 #Christina Hammer
-#Last Edit: 10/09/2017
+#Last Edit: 10/20/2017
 #PhraseMaker.py
 
 from Phrase import *
 import nltk
 import re
 from helper_functions import *
+import string
 
 class PhraseMaker:
     
     def __init__(self):
         self._keywords = load_keywords()
-        
+    
+    #input: "create_phrase" - string
+    #output: phrase object
+    #purpose: creates phrase object after tokenizing and tagging the words contained in the phrase string  
     def create_phrase(self, phrase_str): 
         
         tokenized_phrase = nltk.word_tokenize(phrase_str)
@@ -27,9 +31,9 @@ class PhraseMaker:
                 tokens.append(self._tree_to_tuple(token))
             else:
                 if (token[0] in self._keywords):                
-                    token = (token[0], self._keywords[token[0]])                
+                    token = (token[0], self._keywords[token[0]])
                 tokens.append(token)
-                
+        
         phrase = Phrase(tokens)    
         return phrase 
     
@@ -61,7 +65,16 @@ class PhraseMaker:
                         merge_text = merge_text + ne_chunk_tree[l][0] + " "
                     l = l + 1
                 
-                ne_chunk_list.append((merge_text, merge_tag))
+                if (merge_text[len(merge_text)-1] == " "):
+                    merge_text = merge_text[:-1]              
+                
+                if (merge_tag == "PERSON" ):
+                    name = merge_text.rsplit(" ", 1)
+                    name[0] = name[0] + " "
+                    ne_chunk_list.append(((name[1], name[0]), merge_tag))
+                else: 
+                    ne_chunk_list.append((merge_text, merge_tag))
+                    
                 merge_text = ""
                 merge_tag = "NNP"
                 merge_tokens.pop(0)
@@ -114,9 +127,15 @@ class PhraseMaker:
         
         return merge_tokens    
     
+    #input: "token_text" - string
+    #output: bool
+    #purpose: confirm whether a given string is present in the set of valid month words     
     def _month_used_as_gpe(self, token_text):
         return token_text in {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
     
+    #input: "ne_token" - nltk tree
+    #output: tuple containing string, string pair
+    #purpose:   
     def _tree_to_tuple(self, ne_token):
         
         token_text = ""
@@ -129,7 +148,11 @@ class PhraseMaker:
             for i in range(0, (len(ne_token)-1)):
                 token_text = str(ne_token[i][0]) + " "           
             
-            lname = ne_token[len(ne_token)-1][0]        
+            lname = ne_token[len(ne_token)-1][0]
+            
+            if (token_text == ""):
+                return (lname, ne_token.label())
+            
             return ((lname, token_text), ne_token.label())
             
         for t in ne_token:

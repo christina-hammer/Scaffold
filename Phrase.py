@@ -1,4 +1,4 @@
-#Christina Hammer (unless otherwise credited)
+#Christina Hammer
 #Last Edit: 9/13/2017
 
 import sys
@@ -14,3 +14,4 @@ class Phrase:
         self.is_quote = False        
         self.is_data_point = False
         self.is_date_time = False
+        
