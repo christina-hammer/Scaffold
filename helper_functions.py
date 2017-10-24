@@ -9,6 +9,8 @@ import json
 from datetime import datetime
 import re
 import codecs
+import urllib
+import re
 
 def parse_and_tokenize_document_body(input_article):
     sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -16,9 +18,10 @@ def parse_and_tokenize_document_body(input_article):
     return phrase_strings
 
 def read_from_url(url):
-    #check for valid url
+    
     #read in text body from url
     #make sure text body is valid input to create scaffold
+    print("valid url")
     input_article = "read text body from url"
     return parse_and_tokenize_document_body(input_article)
                        
@@ -40,8 +43,29 @@ def read_from_txt_file(in_file):
     #list of strings
     return parse_and_tokenize_document_body(input_article)
 
-def process_input(input_string):    
-    #if input_string is in url format: read_from_url(url)
+def check_valid_url(input_url):
+    
+    #url validation regex template found at https://stackoverflow.com/questions/7160737/python-how-to-validate-a-url-in-python-malformed-or-not
+    
+    url_regex = re.compile(
+            r'^(?:http|ftp)s?://' # http:// or https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+            r'localhost|' #localhost...
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+            r'(?::\d+)?' # optional port
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)    
+    
+    valid = url_regex.match(input_url)
+    if valid:
+        return True
+    
+    return False
+
+def process_input(input_string):   
+    
+       
+    if (check_valid_url(input_string) ):
+        return read_from_url(input_string)    
     #if input_string is in .txt format: 
     return read_from_text_file(input_string)
     

@@ -11,9 +11,11 @@ if __name__ == "__main__":
     
     phrase_strings = process_input(input_name)
     
-    scaffold_maker = ScaffoldMaker()
+    for p in phrase_strings:
+        print(p)
+    #scaffold_maker = ScaffoldMaker()
         
     #takes in a list of strings (where each string is a phrase in the article)
-    scaffold = scaffold_maker.create_scaffold(phrase_strings)    
+    #scaffold = scaffold_maker.create_scaffold(phrase_strings)    
     
-    write_to_output_file(scaffold)
+    #write_to_output_file(scaffold)
