@@ -11,6 +11,7 @@ import re
 import codecs
 import urllib
 import re
+from six.moves.urllib.request import urlopen
 
 def parse_and_tokenize_document_body(input_article):
     sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -21,9 +22,11 @@ def read_from_url(url):
     
     #read in text body from url
     #make sure text body is valid input to create scaffold
-    print("valid url")
-    input_article = "read text body from url"
-    return parse_and_tokenize_document_body(input_article)
+    
+    input_article = urlopen(url)
+    contents = input_article.read()
+    #return parse_and_tokenize_document_body(input_article)
+    return contents
                        
 
 #input: "infile" - string
@@ -62,7 +65,6 @@ def check_valid_url(input_url):
     return False
 
 def process_input(input_string):   
-    
        
     if (check_valid_url(input_string) ):
         return read_from_url(input_string)    
@@ -79,14 +81,15 @@ def write_to_output_file(scaffold):
     of_name = str("scaffold" + test_dt + ".txt")
     
     outf = open("output/" + of_name, 'w')
-    config = set()
+    #config = set()
     #config.add("p")
     #config.add("l")
     #config.add("n")
     #config.add("a")
-    scaffold_output = scaffold.display(config)
+    #scaffold_output = scaffold.display(config)
     
-    outf.write(scaffold_output)        
+    #outf.write(scaffold_output)       
+    outf.write(str(scaffold) )
     outf.close() 
         
     return
