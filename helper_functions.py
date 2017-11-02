@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 10/29/2017
+#Last Edit: 11/02/2017
 #helper_functions.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -12,6 +12,19 @@ import codecs
 import urllib
 import re
 from six.moves.urllib.request import urlopen
+
+def write_to_file(object_, filename, with_dt):  
+    if (with_dt):        
+        test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")    
+        filename = str(filename + test_dt)
+        
+    filename = filename + + ".txt"
+    outf = open("output/" + filename, 'w')
+    
+    outf.write(str(object_))
+    outf.close()  
+    return  
+    
 
 def parse_and_tokenize_document_body(input_article):
     sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -32,10 +45,10 @@ def read_from_url(url):
 #input: "infile" - string
 #output: list of strings
 #purpose: open file containing text article to be scaffolded and reads text into a list of of strings, seperated by phrase
-def read_from_txt_file(in_file):
+def read_from_text_file(in_file):
     
     try:
-        f = codecs.open(in_file, "r", encoding = 'utf-8', errors = 'ignore')
+        f = codecs.open(in_file, "r", encoding = 'utf-8', errors = 'ignore')        
     except IOError:
         sys.exit("Cannot Open File")
     try:    
@@ -75,7 +88,7 @@ def process_input(input_string):
 #input: "scaffold" - Scaffold object
 #output: none
 #purpose: transfers content of scaffold object into a text file 
-def write_to_output_file(scaffold):
+def write_scaffold_to_file(scaffold):
     
     test_dt = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     of_name = str("scaffold" + test_dt + ".txt")
