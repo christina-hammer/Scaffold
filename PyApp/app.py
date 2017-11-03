@@ -5,7 +5,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-import sample_backend
+from create_scaffold import *
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def initial():
 @app.route("/", methods = ['POST'])
 def process_input():
     text_ = request.form['article']
-    result_ = text_.upper()
+    result_ = create_scaffold(text_)
     return render_template("index.html", result=result_)
 
 if __name__ == "__main__":
