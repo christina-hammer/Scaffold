@@ -1,9 +1,12 @@
+<!--- Chrisitna Hammer -->
+<!--- Last Edit: 11/03/2017-->
+<!--- "index.html"-->
+
 <!DOCTYPE html>
 <html lang="en">
  
 <head>
     <title>Scaffold</title>
- 
  
 </head>
  
@@ -16,20 +19,20 @@
 
 	</h4>
 	<div class = "input features">
-		<form>
+		<form action="." method="POST">
 			Please paste the text article you would like a scaffold of below!<br>
-			<textarea rows="12" cols="80" id="article">				
+			<textarea rows="12" cols="80" name="article">				
 			</textarea>	<br>
-			<input type="button" value="Create Scaffold">
+			<input type="submit", name="create-scaffold" value="Create Scaffold">
 		</form>
-
 	</div>
 
-	<div class = "output features">
-
-
-	</div>
-    
+	{% if result %}
+		<div class = "output features">
+		<br>
+		<h3> {{result}} </h3>
+		</div>
+    {% endif %}
 </body>
  
 </html>
