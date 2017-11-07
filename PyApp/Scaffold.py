@@ -55,7 +55,7 @@ class Scaffold:
             
         if ("d" in configuration or print_all):   
             display_string = display_string + "\nNUMERICAL DATA:\n\n"
-            for d in self.data_points:
+            for d in self.numerical_data:
                 display_string = display_string + str(self.article[d]) + " [Line "+ str(d) +"]\n\n"
         
         if ("a" in configuration or print_all):   

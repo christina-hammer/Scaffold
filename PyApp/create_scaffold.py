@@ -10,7 +10,7 @@ from ScaffoldMaker import *
 
 def ascii_equiv(c):
     c_val = ord(c)
-    replacements = {145:39, 146:39, 147:34, 148:34, 150:45, 151:45, 8217: 39}
+    replacements = {145:39, 146:39, 147:34, 148:34, 150:45, 151:45, 8217: 39, 8217:39, 8220:34, 8221:34, 8211:45, 8212:45}
     if (c_val in replacements):
         return chr(replacements[c_val])
     #else:
