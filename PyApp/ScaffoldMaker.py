@@ -1,5 +1,5 @@
 #Christina Hammer 
-#Last Edit: 10/20/2017
+#Last Edit: 11/06/2017
 #ScaffoldMaker.py
 
 
@@ -86,11 +86,11 @@ class ScaffoldMaker:
                 self._add_named_entity(phrase.tokens[i][0], line_number)
                 
             elif phrase.tokens[i][1] == "CD":                
-                if not phrase.is_date_time and not phrase.is_data_point:
+                if not phrase.is_date_time and not phrase.is_numerical_data:
                     if self._value_is_date_time(phrase.tokens, i):
                         phrase.is_date_time = True
                     else:
-                        phrase.is_data_point = True
+                        phrase.is_numerical_data = True
             elif phrase.tokens[i][1] == "DATETIME":
                 
                 phrase.is_date_time = True
@@ -114,8 +114,8 @@ class ScaffoldMaker:
             #scaffold.article.append(phrase.tokens)
             self.find_semantics(phrase, i)
             
-            if phrase.is_data_point:
-                scaffold.data_points.append(i)
+            if phrase.is_numerical_data:
+                scaffold.numerical_data.append(i)
             if phrase.is_date_time:
                 scaffold.datetimes.append(i)
             if phrase.is_quote:

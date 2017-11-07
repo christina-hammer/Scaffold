@@ -12,6 +12,6 @@ class Phrase:
         #tokens is a list of tuples of tagged tokens, some with POS tags, some with ne tags, some with keyword tags. All are pairs of strings ("token", "TAG")
         self.tokens = tokens_       
         self.is_quote = False        
-        self.is_data_point = False
+        self.is_numerical_data = False
         self.is_date_time = False
         

@@ -1,5 +1,5 @@
 #Chrstina Hammer 
-#Last Edit: 10/20/2017
+#Last Edit: 11/06/2017
 #Scaffold.py
 
 #holds the final breakdown, so to speak
@@ -12,7 +12,7 @@ class Scaffold:
         self.persons = {}
         self.named_entities = {}
         
-        self.data_points = [] #int position of phrases in text
+        self.numerical_data = [] #int position of phrases in text
         self.datetimes = [] #int position of phrases in text
         self.quotes = [] #int positions of phrases in the text
         
@@ -54,7 +54,7 @@ class Scaffold:
                 display_string = display_string + str(self.article[dt]) + " [Line "+ str(dt) +"]\n\n"
             
         if ("d" in configuration or print_all):   
-            display_string = display_string + "\nDATA POINTS:\n\n"
+            display_string = display_string + "\nNUMERICAL DATA:\n\n"
             for d in self.data_points:
                 display_string = display_string + str(self.article[d]) + " [Line "+ str(d) +"]\n\n"
         
