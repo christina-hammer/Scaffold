@@ -39,7 +39,7 @@ class Scaffold:
                 display_string = display_string + l + " "*(self.longest_entry + 4 - len(l)) + "Lines "+ str(self.locations[l]) + "\n"
         
         if ("n" in configuration or print_all):    
-            display_string = display_string + "\nNAMED ENTITIES:\n\n"
+            display_string = display_string + "\nOTHER NAMED SUBJECTS:\n\n"
             for n in self.named_entities:
                 display_string = display_string + n + " "*(self.longest_entry + 4 - len(n)) + "Lines "+ str(self.named_entities[n]) + "\n"
         

@@ -16,6 +16,7 @@ def initial():
 @app.route("/", methods = ['POST'])
 def process_input():
     text_ = request.form['article']
+    
     result_ = create_scaffold(text_)
     return render_template("index.html", result=result_)
 
