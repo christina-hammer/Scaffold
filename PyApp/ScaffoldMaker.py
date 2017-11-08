@@ -6,6 +6,7 @@
 from Scaffold import *
 from Phrase import *
 from PhraseMaker import *
+import re
 
 class ScaffoldMaker:    
     def __init__(self):
@@ -60,12 +61,14 @@ class ScaffoldMaker:
     
     def _value_is_date_time(self, tokens, index):
         #non-round hour times
+        
         if self._am_pm_follows(tokens, index):
             if re.search("/d:/d/d", (tokens[index][0])):
                 return True
             if 0 < float(tokens[index][0]) and float(tokens[index][0]) < 13:        
                 return True  
-        elif re.match("/d/d/d/d", tokens[index][0]):
+        elif re.fullmatch('[0-9]{4}', tokens[index][0]):
+            #print(tokens[index][0])
             return True
         
         return False     
