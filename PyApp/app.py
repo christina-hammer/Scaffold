@@ -26,7 +26,7 @@ def process_input():
     n = scaffold.get_num_data()
     a = scaffold.get_article()
     
-    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a)
+    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, feedback = True)
 
 if __name__ == "__main__":
     app.run()

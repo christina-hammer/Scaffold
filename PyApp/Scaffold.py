@@ -45,11 +45,9 @@ class Scaffold:
         return n
     
     def get_article(self):
-        a = {}
-        i = 0
+        a = ""
         for i in range(0, len(self.article)):
-            a[i+1] = self.article[i]
-            
+            a = a + str(i+1) + ". " + self.article[i] + "\n"
         return a
     
     def display(self, configuration):

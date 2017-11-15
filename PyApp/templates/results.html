@@ -10,7 +10,7 @@
  
 </head>
  
-<body>
+<body >
 	<h1 style="font-family:verdana;">
 		Scaffold
 	</h1>
@@ -30,14 +30,28 @@
 	<div class = "output features">
 		<br>
 		<h3 style="font-family:verdana;"> People</h3>
-		<br>
+		
 		{% if people %}
-
+			{% if feedback %}
+			<pre>Feedback Key: 
+			1 = Wrong Category - should be in 'Locations'
+			2 = Wrong Category - should be in 'Other Named Subjects'
+			3 = Not a person, location, or other named subject
+			</pre>
+			{% endif %}
 			<table border = 1>
 				{% for key, value in people.items() %}
 					<tr>
 						<th> {{key}} </th>
 						<td> {{value}} </td>
+						<td>
+							<input type="radio" id="flag1" value=1> 
+							<label for="flag1">1</label>
+							<input type="radio" id="flag2" value=2>
+							<label for="flag1">2</label>
+							<input type="radio" id="flag3" value=3>
+							<label for="flag1">3</label>
+						</td>
 					</tr>
 				{% endfor %}
 			</table>
@@ -47,7 +61,7 @@
 
 	    <br>
 		<h3 style="font-family:verdana;">Locations</h3>
-		<br>
+		
 
 	    {% if locations %}
 	    	<table border = 1>
@@ -64,7 +78,7 @@
 
 	    <br>
 		<h3 style="font-family:verdana;">Other Named Subjects</h3>
-		<br>
+		
 
 	    {% if subj %}
 	    	<table border = 1>
@@ -81,7 +95,7 @@
 
 	    <br>
 		<h3 style="font-family:verdana;">Event Dates and Times</h3>
-		<br>
+		
 
 	    {% if dt %}
 	    	<table border = 1>
@@ -98,7 +112,7 @@
 
 	    <br>
 		<h3 style="font-family:verdana;">Quotes</h3>
-		<br>
+		
 
 	    {% if quotes %}
 	    	<table border = 1>
@@ -115,7 +129,7 @@
 
 	    <br>
 		<h3 style="font-family:verdana;">Numerical Data</h3>
-		<br>
+		
 
 	    {% if num %}
 	    	<table border = 1>
@@ -132,17 +146,12 @@
 
 	    <br>
 		<h3 style="font-family:verdana;">Article</h3>
-		<br>
+		
 
 	    {% if article %}
-	    	<table border = 1>
-				{% for key, value in article.items() %}
-					<tr>
-						<th> {{key}} </th>
-						<td> {{value}} </td>
-					</tr>
-				{% endfor %}
-			</table>
+					
+			<p><pre>{{article}}</pre></p>				
+			
 	    {% endif %}
 
     </div>
