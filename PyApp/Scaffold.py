@@ -1,5 +1,5 @@
 #Chrstina Hammer 
-#Last Edit: 11/08/2017
+#Last Edit: 11/15/2017
 #Scaffold.py
 
 #holds the final breakdown, so to speak
@@ -23,6 +23,35 @@ class Scaffold:
     #input: "configuration" - set of characters indicating which attributes of scaffold should be added to the display string (p = people, l = locations, n = named entities, q = quotes, t = dats/times, d = data points, a = original article). If no configuration specified, all attributes will be included in the display string
     #output: string of formatted results for printing/text files/general oggling
     #purpose: output a string containing the information from the atttributes of the Scaffold object
+    def get_datetimes(self):
+        dt = {}
+        for l in self.datetimes:
+            dt[l+1] = self.article[l]
+            
+        return dt
+    
+    def get_quotes(self):
+        q = {}
+        for l in self.quotes:
+            q[l+1] = self.article[l]
+            
+        return q
+    
+    def get_num_data(self):
+        n = {}
+        for l in self.numerical_data:
+            n[l+1] = self.article[l]
+            
+        return n
+    
+    def get_article(self):
+        a = {}
+        i = 0
+        for i in range(0, len(self.article)):
+            a[i+1] = self.article[i]
+            
+        return a
+    
     def display(self, configuration):
         
         print_all = (len(configuration) == 0) #bool

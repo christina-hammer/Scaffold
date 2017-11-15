@@ -1,5 +1,5 @@
 #Christina Hammer 
-#Last Edit: 11/06/2017
+#Last Edit: 11/15/2017
 #ScaffoldMaker.py
 
 
@@ -125,8 +125,13 @@ class ScaffoldMaker:
                 scaffold.quotes.append(i)
                 
         #print(self._persons)
-        scaffold.persons.update(self._persons)
-        self._persons.clear()       
+        scaff_persons = {}
+        for p in self._persons:
+            scaff_persons[str(self._persons[p][0]) + str(p)] = self._persons[p][1]
+               
+        scaffold.persons.update(scaff_persons)
+        self._persons.clear() 
+        scaff_persons.clear()
         
         scaffold.locations.update(self._locations)
         self._locations.clear()

@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 11/06/2017
+#Last Edit: 11/15/2017
 #create_scaffold.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -33,8 +33,8 @@ def create_scaffold(article_contents):
         
     #takes in a list of strings (where each string is a phrase in the article)
     scaffold = scaffold_maker.create_scaffold(phrase_strings)
-    config = set()
-    return scaffold.display(config)
+    
+    return scaffold
 
 def parse_and_tokenize_document_body(input_article):
     input_article = replace_non_ascii(input_article)

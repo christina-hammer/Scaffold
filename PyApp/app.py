@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 11/03/2017
+#Last Edit: 11/15/2017
 #app.py
 
 from flask import Flask
@@ -11,14 +11,22 @@ app = Flask(__name__)
 
 @app.route("/")
 def initial():
-    return render_template("index.html", result=None)
+    return render_template("index.html", people=None, locations=None, subj=None, dt=None, quotes=None, num=None, article = None)
 
 @app.route("/", methods = ['POST'])
 def process_input():
     text_ = request.form['article']
     
-    result_ = create_scaffold(text_)
-    return render_template("index.html", result=result_)
+    scaffold = create_scaffold(text_)
+    p = scaffold.persons
+    l = scaffold.locations
+    s = scaffold.named_entities
+    d = scaffold.get_datetimes()
+    q = scaffold.get_quotes()
+    n = scaffold.get_num_data()
+    a = scaffold.get_article()
+    
+    return render_template("index.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a)
 
 if __name__ == "__main__":
     app.run()

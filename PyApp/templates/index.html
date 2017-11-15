@@ -27,12 +27,49 @@
 		</form>
 	</div>
 
-	{% if result %}
-		<div class = "output features">
-		
-		<h3 style="font-family:verdana;"> <pre> {{result}} </pre> </h3>
-		</div>
-    {% endif %}
+	<div class = "output features">
+		<br>
+		<h3 style="font-family:verdana;"> People</h3>
+		<br>
+		{% if people %}
+
+			<table border = 1>
+				{% for key, value in people.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<h4 style="font-family:verdana;"> No specfic person names found in article text</h4>
+	    {% endif %}
+
+	    {% if locations %}
+
+	    {% endif %}
+
+	    {% if subj %}
+
+	    {% endif %}
+
+	    {% if dt %}
+
+	    {% endif %}
+
+	    {% if quotes %}
+
+	    {% endif %}
+
+	    {% if num %}
+
+	    {% endif %}
+
+	    {% if article %}
+
+	    {% endif %}
+
+    </div>
 </body>
  
 </html>
