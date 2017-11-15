@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def initial():
-    return render_template("index.html", people=None, locations=None, subj=None, dt=None, quotes=None, num=None, article = None)
+    return render_template("index.html")
 
 @app.route("/", methods = ['POST'])
 def process_input():
@@ -26,7 +26,7 @@ def process_input():
     n = scaffold.get_num_data()
     a = scaffold.get_article()
     
-    return render_template("index.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a)
+    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a)
 
 if __name__ == "__main__":
     app.run()

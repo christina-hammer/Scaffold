@@ -1,0 +1,151 @@
+<!--- Chrisitna Hammer -->
+<!--- Last Edit: 11/15/2017-->
+<!--- "results.html"-->
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Scaffold</title>
+ 
+</head>
+ 
+<body>
+	<h1 style="font-family:verdana;">
+		Scaffold
+	</h1>
+	<h4 style="font-family:verdana;">	
+		A tool to isolate the information used to build a text article.
+	<br>
+
+	</h4>
+	<div class = "input features">
+		<form action="." method="POST">
+			Please paste the text article you would like a scaffold of below!<br>
+			<textarea rows="12" cols="80" name="article"></textarea>	<br>
+			<input type="submit", name="create-scaffold" value="Create Scaffold">
+		</form>
+	</div>
+
+	<div class = "output features">
+		<br>
+		<h3 style="font-family:verdana;"> People</h3>
+		<br>
+		{% if people %}
+
+			<table border = 1>
+				{% for key, value in people.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<h4 style="font-family:verdana;"> No specfic person names found in article text</h4>
+	    {% endif %}
+
+	    <br>
+		<h3 style="font-family:verdana;">Locations</h3>
+		<br>
+
+	    {% if locations %}
+	    	<table border = 1>
+				{% for key, value in locations.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+	    {% else %}
+			<h4 style="font-family:verdana;"> No specfic location names found in article text</h4>
+	    {% endif %}
+
+	    <br>
+		<h3 style="font-family:verdana;">Other Named Subjects</h3>
+		<br>
+
+	    {% if subj %}
+	    	<table border = 1>
+				{% for key, value in subj.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+	    {% else %}
+			<h4 style="font-family:verdana;"> No other named subjects found in article text</h4>
+	    {% endif %}
+
+	    <br>
+		<h3 style="font-family:verdana;">Event Dates and Times</h3>
+		<br>
+
+	    {% if dt %}
+	    	<table border = 1>
+				{% for key, value in dt.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+	    {% else %}
+			<h4 style="font-family:verdana;"> No event dates or times names found in article text</h4>
+	    {% endif %}
+
+	    <br>
+		<h3 style="font-family:verdana;">Quotes</h3>
+		<br>
+
+	    {% if quotes %}
+	    	<table border = 1>
+				{% for key, value in quotes.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+	    {% else %}
+			<h4 style="font-family:verdana;"> No quotes found in article text</h4>
+	    {% endif %}
+
+	    <br>
+		<h3 style="font-family:verdana;">Numerical Data</h3>
+		<br>
+
+	    {% if num %}
+	    	<table border = 1>
+				{% for key, value in num.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+	    {% else %}
+			<h4 style="font-family:verdana;"> No numerical data points found in article text</h4>
+	    {% endif %}
+
+	    <br>
+		<h3 style="font-family:verdana;">Article</h3>
+		<br>
+
+	    {% if article %}
+	    	<table border = 1>
+				{% for key, value in article.items() %}
+					<tr>
+						<th> {{key}} </th>
+						<td> {{value}} </td>
+					</tr>
+				{% endfor %}
+			</table>
+	    {% endif %}
+
+    </div>
+</body>
+ 
+</html>
