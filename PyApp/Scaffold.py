@@ -23,26 +23,36 @@ class Scaffold:
     #input: "configuration" - set of characters indicating which attributes of scaffold should be added to the display string (p = people, l = locations, n = named entities, q = quotes, t = dats/times, d = data points, a = original article). If no configuration specified, all attributes will be included in the display string
     #output: string of formatted results for printing/text files/general oggling
     #purpose: output a string containing the information from the atttributes of the Scaffold object
+    
+    def _get_named(self, named):
+        d = {}        
+        for n in named.keys():
+            d[n] = str(named[n])[1:-1]            
+        return d
+    
+    def get_persons(self):
+        return self._get_named(self.persons)
+    
+    def get_locations(self):
+        return self._get_named(self.locations)
+    
+    def get_named_entities(self):
+        return self._get_named(self.named_entities)
+    
+    def _get_lines(self, line_nums):
+        d = {}
+        for l in line_nums:
+            d[l+1] = self.article[l]            
+        return d
+    
     def get_datetimes(self):
-        dt = {}
-        for l in self.datetimes:
-            dt[l+1] = self.article[l]
-            
-        return dt
+        return self._get_lines(self.datetimes)
     
     def get_quotes(self):
-        q = {}
-        for l in self.quotes:
-            q[l+1] = self.article[l]
-            
-        return q
+        return self._get_lines(self.quotes)
     
     def get_num_data(self):
-        n = {}
-        for l in self.numerical_data:
-            n[l+1] = self.article[l]
-            
-        return n
+        return self._get_lines(self.numerical_data)
     
     def get_article(self):
         a = ""

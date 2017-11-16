@@ -19,9 +19,9 @@ def process_input():
     feedback_ = request.form.get('feedback_mode')
            
     scaffold = create_scaffold(text_)
-    p = scaffold.persons
-    l = scaffold.locations
-    s = scaffold.named_entities
+    p = scaffold.get_persons()
+    l = scaffold.get_locations()
+    s = scaffold.get_named_entities()
     d = scaffold.get_datetimes()
     q = scaffold.get_quotes()
     n = scaffold.get_num_data()

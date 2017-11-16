@@ -23,7 +23,7 @@ class ScaffoldMaker:
             self._longest_entry = len(new_entry)
         if not(new_entry in self._named_entities):            
             self._named_entities[new_entry] = []
-        self._named_entities[new_entry].append(line_number)        
+        self._named_entities[new_entry].append(line_number+1)        
         return
     
     def _add_loc(self, new_entry, line_number):
@@ -31,18 +31,18 @@ class ScaffoldMaker:
             self._longest_entry = len(new_entry)        
         if not(new_entry in self._locations):
             self._locations[new_entry] = []
-        self._locations[new_entry].append(line_number)        
+        self._locations[new_entry].append(line_number+1)        
         return 
     
     def _add_psn(self, new_entry, line_number):
-        #print(str(new_entry) + " : " + str(type(new_entry)))
+        
         if (type(new_entry) is str):
-            #print("check0")
+            
             if not(new_entry in self._persons):
-                self._add_named_entity(new_entry, line_number)
+                self._add_named_entity(new_entry, line_number+1)
                 return
             else:
-                self._persons[new_entry][1].append(line_number)
+                self._persons[new_entry][1].append(line_number+1)
                 return
             
         if (len(new_entry[0]) + len(new_entry[1])) > self._longest_entry:
@@ -50,7 +50,7 @@ class ScaffoldMaker:
             
         if not (new_entry[0] in self._persons):
             self._persons[new_entry[0]] = (new_entry[1],[])
-        self._persons[new_entry[0]][1].append(line_number)
+        self._persons[new_entry[0]][1].append(line_number+1)
         return
     
     def _am_pm_follows(self, tokens, index):
@@ -105,7 +105,7 @@ class ScaffoldMaker:
                 
         return phrase
     
-        
+           
     def create_scaffold(self, phrase_strings):
         scaffold = Scaffold()
         for i in range(0, len(phrase_strings)):
@@ -126,15 +126,16 @@ class ScaffoldMaker:
                 
         #print(self._persons)
         scaff_persons = {}
+        
         for p in self._persons:
             scaff_persons[str(self._persons[p][0]) + str(p)] = self._persons[p][1]
-               
+            
         scaffold.persons.update(scaff_persons)
         self._persons.clear() 
         scaff_persons.clear()
-        
+                
         scaffold.locations.update(self._locations)
-        self._locations.clear()
+        self._locations.clear()     
         
         scaffold.named_entities.update(self._named_entities)
         self._named_entities.clear()  
