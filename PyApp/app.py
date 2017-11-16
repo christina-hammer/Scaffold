@@ -16,7 +16,8 @@ def initial():
 @app.route("/", methods = ['POST'])
 def process_input():
     text_ = request.form['article']
-    
+    feedback_ = request.form.get('feedback_mode')
+           
     scaffold = create_scaffold(text_)
     p = scaffold.persons
     l = scaffold.locations
@@ -26,7 +27,7 @@ def process_input():
     n = scaffold.get_num_data()
     a = scaffold.get_article()
     
-    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, feedback = True)
+    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, feedback = feedback_)
 
 if __name__ == "__main__":
     app.run()
