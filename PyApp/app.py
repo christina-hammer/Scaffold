@@ -29,6 +29,10 @@ def process_input():
     
     return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, feedback = feedback_)
 
+@app.route("/about")
+def about_page():
+    return render_template("about.html")
+
 if __name__ == "__main__":
     app.run()
 
