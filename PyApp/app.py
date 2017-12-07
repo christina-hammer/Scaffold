@@ -29,7 +29,7 @@ def process_input():
     
     return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, feedback = feedback_)
 
-@app.route("/about")
+@app.route("/about", methods = ['GET','POST'])
 def about_page():
     return render_template("about.html")
 
