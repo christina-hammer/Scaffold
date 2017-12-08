@@ -42,10 +42,13 @@
 			</pre>
 			{% endif %}
 			<table border = 1>
-
+				<tr> 
+	    		<th align = "left">Name</th>
+	    		<th align = "left">Line Numbers</th>
+	    		</tr>
 				{% for key, value in people.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
@@ -78,9 +81,13 @@
 			</pre>
 			{% endif %}
 	    	<table border = 1>
+	    		<tr> 
+	    		<th align = "left">Name</th>
+	    		<th align = "left">Line Numbers</th>
+	    		</tr>
 				{% for key, value in locations.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
@@ -113,9 +120,13 @@
 			</pre>
 			{% endif %}
 	    	<table border = 1>
+	    		<tr> 
+	    		<th align = "left">Name</th>
+	    		<th align = "left">Line Numbers</th>
+	    		</tr>
 				{% for key, value in subj.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
@@ -140,6 +151,10 @@
 
 	    {% if dt %}
 	    	<table border = 1>
+	    		<tr> 
+	    		<th align = "left">Line Number</th>
+	    		<th align = "left">Line Content</th>
+	    		</tr>
 				{% for key, value in dt.items() %}
 					<tr>
 						<th> {{key}} </th>
@@ -163,6 +178,10 @@
 
 	    {% if quotes %}
 	    	<table border = 1>
+	    		<tr> 
+	    		<th align = "left">Line Number</th>
+	    		<th align = "left">Line Content</th>
+	    		</tr>
 				{% for key, value in quotes.items() %}
 					<tr>
 						<th> {{key}} </th>
@@ -186,6 +205,10 @@
 
 	    {% if num %}
 	    	<table border = 1>
+	    		<tr> 
+	    		<th align = "left">Line Number</th>
+	    		<th align = "left">Line Content</th>
+	    		</tr>
 				{% for key, value in num.items() %}
 					<tr>
 						<th> {{key}} </th>
