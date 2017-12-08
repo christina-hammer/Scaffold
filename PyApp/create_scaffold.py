@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 11/15/2017
+#Last Edit: 12/07/2017
 #create_scaffold.py
 
 #This collection of functions are used to perform necessary functions that aren't part of the main class structure of the program
@@ -8,20 +8,16 @@ import nltk
 from Scaffold import *
 from ScaffoldMaker import *
 
-def ascii_equiv(c):
-    c_val = ord(c)
-    replacements = {145:39, 146:39, 147:34, 148:34, 150:45, 151:45, 8217: 39, 8217:39, 8220:34, 8221:34, 8211:45, 8212:45}
-    if (c_val in replacements):
-        return chr(replacements[c_val])
-    #else:
-    #write code to keep track of non-ascii characters that there aren't cases for already so they can be added
-    return ""
 
-def replace_non_ascii(string_):
+def clean_non_english_punc(string_):
+    replacements = {145:39, 146:39, 147:34, 148:34, 150:45, 151:45, 8217: 39, 8217:39, 8220:34, 8221:34, 8211:45, 8212:45, 91:40, 93:41}
+    removals = {42, 64, 92, 94, 95, 126}
+    for s in string_:
+        if ord(s) in replacements:            
+            string_ = string_.replace(s, chr(replacements[ord(s)]))
+        elif ord(s) in removals:
+            string_ = string_.replace(s, "")    
     
-    for c in string_:
-        if ord(c) > 127:
-            string_ = string_.replace(c, ascii_equiv(c))
     return string_
 
 
@@ -37,7 +33,7 @@ def create_scaffold(article_contents):
     return scaffold
 
 def parse_and_tokenize_document_body(input_article):
-    input_article = replace_non_ascii(input_article)
+    input_article = clean_non_english_punc(input_article)
     sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
     phrase_strings = sent_detector.tokenize(input_article.strip())
           

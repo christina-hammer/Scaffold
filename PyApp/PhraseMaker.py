@@ -32,6 +32,7 @@ class PhraseMaker:
         
         tokenized_phrase = nltk.word_tokenize(phrase_str)
         tagged_phrase = nltk.pos_tag(tokenized_phrase)
+        
         ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
         
         merge_tokens = self._find_multi_token_nnp(ne_chunk_tree) 
