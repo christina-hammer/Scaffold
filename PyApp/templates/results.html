@@ -6,18 +6,61 @@
 <html lang="en">
  
 <head>
+	<style>
+	body {
+		font-family:helvetica;
+	}
+
+	h1 {
+		color:seagreen;
+		font-size:18;
+	}
+	h4 {color:grey;
+		font-family:helvetica;
+	}
+	h1, h4 {display:inline;}
+
+	h3 {
+		color:seagreen;
+
+	}
+	a:link, a:visited {
+		color:white;
+		text-decoration:none;
+		background-color:seagreen;
+		text-align:center;
+		padding: 10px 24px;
+		display:inline-block;
+		font-family:helvetica;
+	}
+
+	a:hover, a:active {
+		color:seagreen;
+		background-color:white;
+		text-decoration:none;
+		
+	}
+
+	pre {
+		font-family:helvetica;
+	}
+	</style>
+
     <title>Scaffold</title>
  
 </head>
  
 <body >
-	<h1 style="font-family:verdana;">
+	<h1>
 		Scaffold
 	</h1>
-	<h4 style="font-family:verdana;">	
+	<h4>	
 		A tool to isolate the information used to build a text article.
 	<br>
-	<p><a href="{{ url_for('about_page') }}">About Scaffold</a></p>
+	<p>
+		<a href="{{ url_for('about_page') }}">About Scaffold</a>
+		<a href="scaffoldproject.blogspot.com">Project Blog</a>
+	</p>
 	</h4>
 	<div class = "input features">
 		<form action="." method="POST">
@@ -30,7 +73,7 @@
 
 	<div class = "output features">
 		<br>
-		<h3 style="font-family:verdana;"> People</h3>
+		<h3> People</h3>
 		
 		{% if people %}
 			{% if feedback %}
@@ -64,11 +107,11 @@
 				{% endfor %}
 			</table>
 		{% else %}
-			<h4 style="font-family:verdana;"> No specfic person names found in article text</h4>
+			<h4> No specfic person names found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Locations</h3>
+		<h3>Locations</h3>
 		
 
 	    {% if locations %}
@@ -103,11 +146,11 @@
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No specfic location names found in article text</h4>
+			<h4> No specfic location names found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Other Named Subjects</h3>
+		<h3>Other Named Subjects</h3>
 		
 
 	    {% if subj %}
@@ -142,11 +185,11 @@
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No other named subjects found in article text</h4>
+			<h4> No other named subjects found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Event Dates and Times</h3>
+		<h3>Event Dates and Times</h3>
 		
 
 	    {% if dt %}
@@ -169,11 +212,11 @@
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No event dates or times names found in article text</h4>
+			<h4> No event dates or times names found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Quotes</h3>
+		<h3>Quotes</h3>
 		
 
 	    {% if quotes %}
@@ -196,11 +239,11 @@
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No quotes found in article text</h4>
+			<h4> No quotes found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Numerical Data</h3>
+		<h3>Numerical Data</h3>
 		
 
 	    {% if num %}
@@ -223,11 +266,11 @@
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No numerical data points found in article text</h4>
+			<h4> No numerical data points found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Article</h3>
+		<h3>Article</h3>
 		
 
 	    {% if article %}
