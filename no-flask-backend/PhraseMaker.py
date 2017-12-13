@@ -1,12 +1,24 @@
 #Christina Hammer
-#Last Edit: 10/20/2017
+#Last Edit: 11/03/2017
 #PhraseMaker.py
 
 from Phrase import *
 import nltk
 import re
-from helper_functions import *
 import string
+import json
+
+#input: none
+#output: dictionary of string,string pairs
+#purpose: populate a dictionary of keywords from a json file to be used in tagging  
+def load_keywords():
+    #write code to load JSON file into dictionary    
+    keyword_json = open("keywords.json", encoding = 'utf8')
+    keyword_string = keyword_json.read() 
+    keywords_ = {}
+    keywords_.update(json.loads(keyword_string))    
+    
+    return keywords_
 
 class PhraseMaker:
     
@@ -17,13 +29,20 @@ class PhraseMaker:
     #output: phrase object
     #purpose: creates phrase object after tokenizing and tagging the words contained in the phrase string  
     def create_phrase(self, phrase_str): 
-        
+               
         tokenized_phrase = nltk.word_tokenize(phrase_str)
         tagged_phrase = nltk.pos_tag(tokenized_phrase)
-        ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
         
+        ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
+        #if (line_num in bluh):
+            #print(str(line_num)+". "+str(ne_chunk_tree))
+            
         merge_tokens = self._find_multi_token_nnp(ne_chunk_tree) 
+                    
         ne_chunk_list = self._merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
+        
+        #if (line_num in bluh):
+            #print(str(line_num)+". "+str(ne_chunk_list))        
         
         tokens = [] #list of tagged tuples
         for token in ne_chunk_list:
@@ -33,7 +52,10 @@ class PhraseMaker:
                 if (token[0] in self._keywords):                
                     token = (token[0], self._keywords[token[0]])
                 tokens.append(token)
-        
+                
+        #if (line_num in bluh):
+            #print(str(line_num)+". "+str(tokens))  
+            
         phrase = Phrase(tokens)    
         return phrase 
     
