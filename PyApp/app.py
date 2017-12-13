@@ -1,10 +1,11 @@
 #Christina Hammer
-#Last Edit: 12/07/2017
+#Last Edit: 12/13/2017
 #app.py
 
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import redirect
 from create_scaffold import *
 
 app = Flask(__name__)
@@ -32,6 +33,14 @@ def process_input():
 @app.route("/about", methods = ['GET','POST'])
 def about_page():
     return render_template("about.html")
+
+@app.route("/gh")
+def github_page():
+    return redirect("christina-hammer.github.io/Scaffold")
+
+@app.route("/back")
+def go_back():
+    return redirect(request.referrer)
 
 if __name__ == "__main__":
     app.run()
