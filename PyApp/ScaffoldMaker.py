@@ -108,6 +108,7 @@ class ScaffoldMaker:
            
     def create_scaffold(self, phrase_strings):
         scaffold = Scaffold()
+                
         for i in range(0, len(phrase_strings)):
             
             scaffold.article.append(phrase_strings[i])
