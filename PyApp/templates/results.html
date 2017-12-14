@@ -44,12 +44,15 @@
 	tr:nth-child(even) {background-color: #f2f2f2;}
 	table {
 		border-collapse:collapse;
-		padding: 10px;
+		
+
 	}
 	th {
 		border-top:hidden;
 		border-left:hidden;
 		border-right:hidden;
+		text-align:center;
+		padding:10px;
 	}
 	pre {
 		font-family:helvetica;
@@ -86,18 +89,22 @@
 		<h3> People</h3>
 		
 		{% if people %}
-			{% if feedback %}
+			<!-- {% if feedback %}
 			<pre>
 			Feedback Key: 
 			1 = Wrong Category - should be in 'Locations'
 			2 = Wrong Category - should be in 'Other Named Subjects'
 			3 = Not a person, location, or other named subject
 			</pre>
-			{% endif %}
+			{% endif %} -->
 			<table border = 1>
 				<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
+	    		{% if feedback %}
+	    		<th align = "left">Feedback: Category</th>
+	    		<th align = "left">Feedback: Chunking</th>
+	    		{% endif %}
 	    		</tr>
 				{% for key, value in people.items() %}
 					<tr>
@@ -105,14 +112,22 @@
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
-							<input type="radio" id="flag1" value=1> 
-							<label for="flag1">1</label>
-							<input type="radio" id="flag2" value=2>
-							<label for="flag1">2</label>
-							<input type="radio" id="flag3" value=3>
-							<label for="flag1">3</label>
+							<select>
+								<option value=0>Correctly Categorized</option>
+								<option value=1>Wrong Category - should be in 'Locations'</option>
+								<option value=2>Wrong Category - should be in 'Other Named Subjects'</option>
+								<option value=3>Not a person, location or other named entity</option>
+							</select>
 						</td>
-						{% endif %}
+						<td>
+							<select>
+								<option value=0>Chunk is complete and correct</option>
+								<option value=1>Beginning of chunk that is missing succeeding tokens</option>
+								<option value=2>Middle or end of token missing preceding tokens</option>
+								<option value=3>No token of chunk is a named entity</option>
+							</select>
+						</td>
+						{% endif %}					
 					</tr>
 				{% endfor %}
 			</table>
@@ -137,6 +152,9 @@
 	    		<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
+	    		{% if feedback %}
+	    		<th align = "left">Feedback</th>
+	    		{% endif %}
 	    		</tr>
 				{% for key, value in locations.items() %}
 					<tr>
@@ -176,6 +194,9 @@
 	    		<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
+	    		{% if feedback %}
+	    		<th align = "left">Feedback</th>
+	    		{% endif %}
 	    		</tr>
 				{% for key, value in subj.items() %}
 					<tr>
@@ -207,10 +228,13 @@
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
 	    		<th align = "left">Line Content</th>
+	    		{% if feedback %}
+	    		<th align = "left">Feedback</th>
+	    		{% endif %}
 	    		</tr>
 				{% for key, value in dt.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
@@ -234,10 +258,13 @@
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
 	    		<th align = "left">Line Content</th>
+	    		{% if feedback %}
+	    		<th align = "left">Feedback</th>
+	    		{% endif %}
 	    		</tr>
 				{% for key, value in quotes.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
@@ -261,10 +288,13 @@
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
 	    		<th align = "left">Line Content</th>
+	    		{% if feedback %}
+	    		<th align = "left">Feedback</th>
+	    		{% endif %}
 	    		</tr>
 				{% for key, value in num.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
 						{% if feedback %}
 						<td>
