@@ -80,11 +80,11 @@
 			Please paste the text article you would like a scaffold of below!<br>
 			<textarea rows="12" cols="80" name="article" >{{original_text}}</textarea>	<br>
 			<input type="submit", name="create-scaffold" value="Create Scaffold">
-			<input type="checkbox" name="feedback_mode" value=1> Use Feedback Mode
+			
 		</form>
 	</div>
 
-	<form action="{{ url_for('feedback')}}", method="POST">
+	
 	<div class = "output features">
 		<br>
 		<h3> People</h3>
@@ -96,35 +96,11 @@
 					<tr> 
 		    		<th align = "left">Name</th>
 		    		<th align = "left">Line Numbers</th>
-		    		{% if feedback %}
-		    		<th align = "left">Feedback: Category</th>
-		    		<th align = "left">Feedback: Chunking</th>
-		    		{% endif %}
 		    		</tr>
 					{% for key, value in people.items() %}
 						<tr>
 							<td> {{key}} </td>
-							<td> {{value}} </td>
-							{% if feedback %}
-							<td>
-								<select name="cat_fb_psn">
-									<option value=0>Correctly Categorized</option>
-									<option value=1>Wrong Category - should be in 'Locations'</option>
-									<option value=2>Wrong Category - should be in 'Other Named Subjects'</option>
-									<option value=3>Not a person, location or other named entity</option>
-								</select>
-							</td>
-							<td>
-								<select name="chunk_fb_psn">
-									<option value=0>Chunk is complete and correct</option>
-									<option value=1>Beginning of chunk that is missing succeeding tokens</option>
-									<option value=2>Middle or end of token missing preceding tokens</option>
-									<option value=3>No token of chunk is a named entity</option>
-									<option value=4>Other error with chunking</option>
-									
-								</select>
-							</td>
-							{% endif %}					
+							<td> {{value}} </td>				
 						</tr>
 					{% endfor %}
 				</table>
@@ -144,35 +120,12 @@
 	    		<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
-	    		{% if feedback %}
-	    		<th align = "left">Feedback: Category</th>
-	    		<th align = "left">Feedback: Chunking</th>
-	    		{% endif %}
+	    		
 	    		</tr>
 				{% for key, value in locations.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-							<td>
-								<select name="cat_fb_loc">
-									<option value=0>Correctly Categorized</option>
-									<option value=1>Wrong Category - should be in 'People'</option>
-									<option value=2>Wrong Category - should be in 'Other Named Subjects'</option>
-									<option value=3>Not a person, location or other named entity</option>
-								</select>
-							</td>
-							<td>
-								<select name="chunk_fb_loc">
-									<option value=0>Chunk is complete and correct</option>
-									<option value=1>Beginning of chunk that is missing succeeding tokens</option>
-									<option value=2>Middle or end of token missing preceding tokens</option>
-									<option value=3>No token of chunk is a named entity</option>
-									<option value=4>Other error with chunking</option>
-									
-								</select>
-							</td>
-							{% endif %}	
 					</tr>
 				{% endfor %}
 			</table>
@@ -190,35 +143,12 @@
 	    		<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
-	    		{% if feedback %}
-	    		<th align = "left">Feedback: Category</th>
-	    		<th align = "left">Feedback: Chunking</th>
-	    		{% endif %}
+	    		
 	    		</tr>
 				{% for key, value in subj.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-							<td>
-								<select name="cat_fb_ne">
-									<option value=0>Correctly Categorized</option>
-									<option value=1>Wrong Category - should be in 'Locations'</option>
-									<option value=2>Wrong Category - should be in 'People'</option>
-									<option value=3>Not a person, location or other named entity</option>
-								</select>
-							</td>
-							<td>
-								<select name="chunk_fb_ne">
-									<option value=0>Chunk is complete and correct</option>
-									<option value=1>Beginning of chunk that is missing succeeding tokens</option>
-									<option value=2>Middle or end of token missing preceding tokens</option>
-									<option value=3>No token of chunk is a named entity</option>
-									<option value=4>Other error with chunking</option>
-									
-								</select>
-							</td>
-							{% endif %}	
 					</tr>
 				{% endfor %}
 			</table>
@@ -235,20 +165,12 @@
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
 	    		<th align = "left">Line Content</th>
-	    		{% if feedback %}
-	    		<th align = "left">Feedback</th>
-	    		{% endif %}
 	    		</tr>
 				{% for key, value in dt.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag4" value=1> 
-							<label for="flag4">Not a specific date, day, or time</label>
-						</td>
-						{% endif %}
+						
 					</tr>
 				{% endfor %}
 			</table>
@@ -264,21 +186,12 @@
 	    	<table border = 1>
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
-	    		<th align = "left">Line Content</th>
-	    		{% if feedback %}
-	    		<th align = "left">Feedback</th>
-	    		{% endif %}
+	    		<th align = "left">Line Content</th>	    		
 	    		</tr>
 				{% for key, value in quotes.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag5" value=1> 
-							<label for="flag5">Not a partial or whole quote</label>
-						</td>
-						{% endif %}
 					</tr>
 				{% endfor %}
 			</table>
@@ -287,38 +200,26 @@
 	    {% endif %}
 
 	    <br>
-		<h3>Numerical Data</h3>
-		
+		<h3>Numerical Data</h3>		
 
 	    {% if num %}
 	    	<table border = 1>
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
 	    		<th align = "left">Line Content</th>
-	    		{% if feedback %}
-	    		<th align = "left">Feedback</th>
-	    		{% endif %}
+	    		
 	    		</tr>
 				{% for key, value in num.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag6" value=1> 
-							<label for="flag6">Does not contain numerical data</label>
-						</td>
-						{% endif %}
+						
 					</tr>
 				{% endfor %}
 			</table>
 	    {% else %}
 			<h4> No numerical data points found in article text</h4>
 	    {% endif %}
-
-	    {% if feedback %}        
-			<input type="submit", name="submit-feedback" value="Submit Feedback">
-		{% endif %}
 		</form>
 	    <br>
 		<h3>Article</h3>
