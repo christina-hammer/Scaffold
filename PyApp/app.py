@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 12/14/2017
+#Last Edit: 12/15/2017
 #app.py
 
 from flask import Flask
@@ -35,9 +35,9 @@ def about_page():
 
 @app.route("/gh")
 def github_page():
-    return redirect("christina-hammer.github.io/Scaffold")
+    return redirect("http://christina-hammer.github.io/Scaffold")
 
-@app.route("/back")
+@app.route("/about")
 def go_back():
     return redirect(request.referrer)
 
