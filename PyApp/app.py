@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 12/13/2017
+#Last Edit: 12/14/2017
 #app.py
 
 from flask import Flask
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def initial():
-    return render_template("index.html")
+    return render_template("index.html", original_text="")
 
 @app.route("/", methods = ['POST'])
 def process_input():
@@ -28,7 +28,7 @@ def process_input():
     n = scaffold.get_num_data()
     a = scaffold.get_article()
     
-    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, feedback = feedback_)
+    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_, feedback = feedback_)
 
 @app.route("/about", methods = ['GET','POST'])
 def about_page():
@@ -41,6 +41,22 @@ def github_page():
 @app.route("/back")
 def go_back():
     return redirect(request.referrer)
+
+@app.route("/feedback", methods = ['GET', 'POST'])
+def feedback():
+    #cat_fb_psn = request.form['cat_fb_psn']
+    #chunk_fb_psn = request.form['chunk_fb_psn']    
+    
+    #cat_fb_loc = request.form['cat_fb_loc']
+    #chunk_fb_loc = request.form['chunk_fb_loc']    
+    
+    #cat_fb_ne = request.form['cat_fb_ne']
+    #chunk_fb_ne = request.form['chunk_fb_ne']
+    
+    #print(cat_fb_psn)
+    #print(chunk_fb_psn)    
+    
+    return "Feedback Submitted! Use the back button your browser to return to your results."
 
 if __name__ == "__main__":
     app.run()
