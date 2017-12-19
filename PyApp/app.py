@@ -31,15 +31,26 @@ def process_input():
 
 @app.route("/about", methods = ['GET','POST'])
 def about_page():
-    return render_template("about.html")
+    _orig_text = request.form['orig_text']
+    
+    if (_orig_text is None):
+        _orig_text = ""
+    
+    return render_template("about.html", original_text = _orig_text)
 
 @app.route("/gh")
 def github_page():
     return redirect("http://christina-hammer.github.io/Scaffold")
 
-@app.route("/about")
+@app.route("/", methods = ['GET', 'POST'])
 def go_back():
-    return redirect(request.referrer)
+    print("\ncheck\n")
+    _orig_text = request.form['orig_text']
+    
+    if (_orig_text is None):
+        _orig_text = ""
+    print("\ncheck\n")  
+    return render_template("index.html", original_text=_orig_text)
 
 
 if __name__ == "__main__":

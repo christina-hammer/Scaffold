@@ -40,6 +40,22 @@
 		
 		}
 
+		input[type=submit] {
+			color:white;
+			text-decoration:none;
+			background-color:#00CC99;
+			text-align:center;
+			padding: 10px 24px;
+			display:inline-block;
+			font-family:helvetica;
+			}
+
+		input[type=submit]:hover {
+			color:#00CC99;
+			background-color:white;
+			text-decoration:none;
+		}
+
 
 	</style>
     <title>Scaffold</title>
@@ -54,7 +70,10 @@
 		A tool to isolate the information used to build a text article.
 	<br>
 	<p>
-		<a href="{{ url_for('go_back') }}">Hide About</a>
+		<form action ="{{ url_for('go_back') }}", method="POST">
+		<textarea style="display:none;" name = orig_text>{{original_text}}</textarea>
+		<input type="submit", value="Home">
+		</form>
 		<a href="{{ url_for('github_page') }}">Github Page</a>
 	</p>
 	</h4>

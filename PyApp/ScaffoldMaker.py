@@ -35,7 +35,7 @@ class ScaffoldMaker:
         return 
     
     def _add_psn(self, new_entry, line_number):
-        
+        print(new_entry)
         if (type(new_entry) is str):
             
             if not(new_entry in self._persons):
