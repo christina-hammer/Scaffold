@@ -1,5 +1,5 @@
 <!--- Chrisitna Hammer -->
-<!--- Last Edit: 12/14/2017-->
+<!--- Last Edit: 12/18/2017-->
 <!--- "results.html"-->
 
 <!DOCTYPE html>
@@ -58,22 +58,6 @@
 		font-family:helvetica;
 	}
 
-	input[type=submit] {
-		color:white;
-		text-decoration:none;
-		background-color:#00CC99;
-		text-align:center;
-		padding: 10px 24px;
-		display:inline-block;
-		font-family:helvetica;
-	}
-
-	input[type=submit]:hover {
-		color:#00CC99;
-		background-color:white;
-		text-decoration:none;
-	}
-
 	</style>
 
     <title>Scaffold</title>
@@ -88,11 +72,8 @@
 		A tool to isolate the information used to build a text article.
 	<br>
 	<p>
-		<form action = "{{ url_for('about_page') }}", method="POST">
-		<textarea style="display:none;" name="orig_text">{{original_text}}</textarea>
-		<input class = "about_button", type="submit", value = "About Scaffold">
-		</form>
-		<a href="{{ url_for('github_page') }}">Github Page</a>
+		<a href="{{ url_for('about_page') }}" target="_blank" >Tutorial</a>
+		<a href="{{ url_for('github_page') }}" target ="_blank">Github Page</a>
 	</p>
 	</h4>
 	<div class = "input features">

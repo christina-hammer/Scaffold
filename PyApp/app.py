@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 12/15/2017
+#Last Edit: 12/18/2017
 #app.py
 
 from flask import Flask
@@ -16,6 +16,7 @@ def initial():
 
 @app.route("/", methods = ['POST'])
 def process_input():
+    
     text_ = request.form['article']
            
     scaffold = create_scaffold(text_)
@@ -29,29 +30,13 @@ def process_input():
     
     return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_)
 
-@app.route("/about", methods = ['GET','POST'])
-def about_page():
-    _orig_text = request.form['orig_text']
-    
-    if (_orig_text is None):
-        _orig_text = ""
-    
-    return render_template("about.html", original_text = _orig_text)
+@app.route("/about")
+def about_page():    
+    return render_template("about.html")
 
 @app.route("/gh")
 def github_page():
     return redirect("http://christina-hammer.github.io/Scaffold")
-
-@app.route("/", methods = ['GET', 'POST'])
-def go_back():
-    print("\ncheck\n")
-    _orig_text = request.form['orig_text']
-    
-    if (_orig_text is None):
-        _orig_text = ""
-    print("\ncheck\n")  
-    return render_template("index.html", original_text=_orig_text)
-
 
 if __name__ == "__main__":
     app.run()
