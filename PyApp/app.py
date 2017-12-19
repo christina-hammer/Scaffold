@@ -30,8 +30,8 @@ def process_input():
     
     return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_)
 
-@app.route("/about")
-def about_page():    
+@app.route("/tutorial")
+def tutorial_page():    
     return render_template("about.html")
 
 @app.route("/gh")
