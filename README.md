@@ -1,6 +1,8 @@
 # Scaffold
 
-Scaffold is a program to identify the topics mentioned in a piece of journalism as well as interpreting and presenting which lines contain  data points, quotations, dates and/or times. 
+Scaffold is a program to identify the topics mentioned in a piece of journalism as well as interpreting and presenting which lines contain  data points, quotations, dates and/or times.
+
+For recent updates and tales about the project, check out the [Scaffold blog!](https://scaffoldproject.blogspot.com/)
 
 Goals for Current Version
 -------------------------
@@ -27,5 +29,6 @@ Scaffold is not designed to summarize the text, elucidate the purpose of a text,
 More Info and Updates
 ---------------------
 
-Blog: https://scaffoldproject.blogspot.com/
-Questions: christinaelizabethhammer@gmail.com
+Blog: [scaffoldproject.blogspot.com](https://scaffoldproject.blogspot.com/)
+
+Questions: [christinaelizabethhammer@gmail.com](mailto:christinaelizabethhammer@gmail.com)
