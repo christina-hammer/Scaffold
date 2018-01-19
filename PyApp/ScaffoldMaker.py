@@ -1,5 +1,5 @@
 #Christina Hammer 
-#Last Edit: 11/15/2017
+#Last Edit: 12/15/2017
 #ScaffoldMaker.py
 
 
@@ -35,7 +35,7 @@ class ScaffoldMaker:
         return 
     
     def _add_psn(self, new_entry, line_number):
-        
+        print(new_entry)
         if (type(new_entry) is str):
             
             if not(new_entry in self._persons):
@@ -85,7 +85,7 @@ class ScaffoldMaker:
             elif phrase.tokens[i][1] == "PERSON":                
                 self._add_psn(phrase.tokens[i][0], line_number) 
                 
-            elif phrase.tokens[i][1] == "NAMED_ENTITY" or phrase.tokens[i][1] == "NNP":                
+            elif (phrase.tokens[i][1] == "NAMED_ENTITY" or phrase.tokens[i][1] == "NNP") or phrase.tokens[i][1] == "ORGANIZATION":                
                 self._add_named_entity(phrase.tokens[i][0], line_number)
                 
             elif phrase.tokens[i][1] == "CD":                
@@ -101,8 +101,9 @@ class ScaffoldMaker:
             elif phrase.tokens[i][1] == "``" or phrase.tokens[i][1] == "''":                
                 if not self._quotation:
                     phrase.is_quote = True
-                self._quotation = not self._quotation                
+                self._quotation = not self._quotation 
                 
+              
         return phrase
     
            

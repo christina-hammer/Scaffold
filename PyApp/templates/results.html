@@ -1,152 +1,164 @@
 <!--- Chrisitna Hammer -->
-<!--- Last Edit: 12/07/2017-->
+<!--- Last Edit: 12/18/2017-->
 <!--- "results.html"-->
 
 <!DOCTYPE html>
 <html lang="en">
  
 <head>
+	<style>
+	body {
+		font-family:helvetica;
+	}
+
+	h1 {
+		color:#00CC99;
+		font-size:18;
+	}
+	h4 {color:grey;
+		font-family:helvetica;
+	}
+	h1, h4 {display:inline;}
+
+	h3 {
+		color:#00CC99;
+
+	}
+	a:link, a:visited {
+		color:white;
+		text-decoration:none;
+		background-color:#00CC99;
+		text-align:center;
+		padding: 10px 24px;
+		display:inline-block;
+		font-family:helvetica;
+	}
+
+	a:hover, a:active {
+		color:#00CC99;
+		background-color:white;
+		text-decoration:none;
+		
+	}
+
+	tr:nth-child(even) {background-color: #f2f2f2;}
+	table {
+		border-collapse:collapse;
+		
+
+	}
+	th {
+		border-top:hidden;
+		border-left:hidden;
+		border-right:hidden;
+		text-align:center;
+		padding:10px;
+	}
+	pre {
+		font-family:helvetica;
+	}
+
+	</style>
+
     <title>Scaffold</title>
  
 </head>
  
 <body >
-	<h1 style="font-family:verdana;">
+	<h1>
 		Scaffold
 	</h1>
-	<h4 style="font-family:verdana;">	
+	<h4>	
 		A tool to isolate the information used to build a text article.
 	<br>
-	<p><a href="{{ url_for('about_page') }}">About Scaffold</a></p>
+	<p>
+		<a href="{{ url_for('about_page') }}" target="_blank" >Tutorial</a>
+		<a href="{{ url_for('github_page') }}" target ="_blank">Github Page</a>
+	</p>
 	</h4>
 	<div class = "input features">
 		<form action="." method="POST">
 			Please paste the text article you would like a scaffold of below!<br>
-			<textarea rows="12" cols="80" name="article"></textarea>	<br>
+			<textarea rows="12" cols="80" name="article" >{{original_text}}</textarea>	<br>
 			<input type="submit", name="create-scaffold" value="Create Scaffold">
-			<input type="checkbox" name="feedback_mode" value=1> Use Feedback Mode
+			
 		</form>
 	</div>
 
+	
 	<div class = "output features">
 		<br>
-		<h3 style="font-family:verdana;"> People</h3>
+		<h3> People</h3>
 		
 		{% if people %}
-			{% if feedback %}
-			<pre>
-			Feedback Key: 
-			1 = Wrong Category - should be in 'Locations'
-			2 = Wrong Category - should be in 'Other Named Subjects'
-			3 = Not a person, location, or other named subject
-			</pre>
-			{% endif %}
-			<table border = 1>
-				<tr> 
-	    		<th align = "left">Name</th>
-	    		<th align = "left">Line Numbers</th>
-	    		</tr>
-				{% for key, value in people.items() %}
-					<tr>
-						<td> {{key}} </td>
-						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag1" value=1> 
-							<label for="flag1">1</label>
-							<input type="radio" id="flag2" value=2>
-							<label for="flag1">2</label>
-							<input type="radio" id="flag3" value=3>
-							<label for="flag1">3</label>
-						</td>
-						{% endif %}
-					</tr>
-				{% endfor %}
-			</table>
+			
+			
+				<table border = 1>
+					<tr> 
+		    		<th align = "left">Name</th>
+		    		<th align = "left">Line Numbers</th>
+		    		</tr>
+					{% for key, value in people.items() %}
+						<tr>
+							<td> {{key}} </td>
+							<td> {{value}} </td>				
+						</tr>
+					{% endfor %}
+				</table>
+				
+			
 		{% else %}
-			<h4 style="font-family:verdana;"> No specfic person names found in article text</h4>
+			<h4> No specfic person names found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Locations</h3>
+		<h3>Locations</h3>
 		
 
 	    {% if locations %}
-	    	{% if feedback %}
-			<pre>
-			Feedback Key: 
-			1 = Wrong Category - should be in 'People'
-			2 = Wrong Category - should be in 'Other Named Subjects'
-			3 = Not a person, location, or other named subject
-			</pre>
-			{% endif %}
+	    	
 	    	<table border = 1>
 	    		<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
+	    		
 	    		</tr>
 				{% for key, value in locations.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag1" value=1> 
-							<label for="flag1">1</label>
-							<input type="radio" id="flag2" value=2>
-							<label for="flag1">2</label>
-							<input type="radio" id="flag3" value=3>
-							<label for="flag1">3</label>
-						</td>
-						{% endif %}
 					</tr>
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No specfic location names found in article text</h4>
+			<h4> No specfic location names found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Other Named Subjects</h3>
+		<h3>Other Named Subjects</h3>
 		
 
 	    {% if subj %}
-	    	{% if feedback %}
-			<pre>
-			Feedback Key: 
-			1 = Wrong Category - should be in 'People'
-			2 = Wrong Category - should be in 'Locations'
-			3 = Not a person, location, or other named subject
-			</pre>
-			{% endif %}
+	    	
 	    	<table border = 1>
 	    		<tr> 
 	    		<th align = "left">Name</th>
 	    		<th align = "left">Line Numbers</th>
+	    		
 	    		</tr>
 				{% for key, value in subj.items() %}
 					<tr>
 						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag1" value=1> 
-							<label for="flag1">1</label>
-							<input type="radio" id="flag2" value=2>
-							<label for="flag1">2</label>
-							<input type="radio" id="flag3" value=3>
-							<label for="flag1">3</label>
-						</td>
-						{% endif %}
 					</tr>
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No other named subjects found in article text</h4>
+			<h4> No other named subjects found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Event Dates and Times</h3>
+		<h3>Event Dates and Times</h3>
 		
 
 	    {% if dt %}
@@ -157,77 +169,61 @@
 	    		</tr>
 				{% for key, value in dt.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag4" value=1> 
-							<label for="flag4">Not a specific date, day, or time</label>
-						</td>
-						{% endif %}
+						
 					</tr>
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No event dates or times names found in article text</h4>
+			<h4> No event dates or times names found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Quotes</h3>
+		<h3>Quotes</h3>
 		
 
 	    {% if quotes %}
 	    	<table border = 1>
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
-	    		<th align = "left">Line Content</th>
+	    		<th align = "left">Line Content</th>	    		
 	    		</tr>
 				{% for key, value in quotes.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag5" value=1> 
-							<label for="flag5">Not a partial or whole quote</label>
-						</td>
-						{% endif %}
 					</tr>
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No quotes found in article text</h4>
+			<h4> No quotes found in article text</h4>
 	    {% endif %}
 
 	    <br>
-		<h3 style="font-family:verdana;">Numerical Data</h3>
-		
+		<h3>Numerical Data</h3>		
 
 	    {% if num %}
 	    	<table border = 1>
 	    		<tr> 
 	    		<th align = "left">Line Number</th>
 	    		<th align = "left">Line Content</th>
+	    		
 	    		</tr>
 				{% for key, value in num.items() %}
 					<tr>
-						<th> {{key}} </th>
+						<td> {{key}} </td>
 						<td> {{value}} </td>
-						{% if feedback %}
-						<td>
-							<input type="radio" id="flag6" value=1> 
-							<label for="flag6">Does not contain numerical data</label>
-						</td>
-						{% endif %}
+						
 					</tr>
 				{% endfor %}
 			</table>
 	    {% else %}
-			<h4 style="font-family:verdana;"> No numerical data points found in article text</h4>
+			<h4> No numerical data points found in article text</h4>
 	    {% endif %}
-
+		</form>
 	    <br>
-		<h3 style="font-family:verdana;">Article</h3>
+		<h3>Article</h3>
 		
 
 	    {% if article %}

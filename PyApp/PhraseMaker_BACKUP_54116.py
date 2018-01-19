@@ -29,15 +29,30 @@ class PhraseMaker:
     #output: phrase object
     #purpose: creates phrase object after tokenizing and tagging the words contained in the phrase string  
     def create_phrase(self, phrase_str): 
-        
+               
         tokenized_phrase = nltk.word_tokenize(phrase_str)
         tagged_phrase = nltk.pos_tag(tokenized_phrase)
+<<<<<<< HEAD
+        
+        ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
+        #if (line_num in bluh):
+            #print(str(line_num)+". "+str(ne_chunk_tree))
+            
+        merge_tokens = self._find_multi_token_nnp(ne_chunk_tree) 
+                    
+        ne_chunk_list = self._merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
+        
+        #if (line_num in bluh):
+            #print(str(line_num)+". "+str(ne_chunk_list))        
+        
+=======
         ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
         print(ne_chunk_tree)
         merge_tokens = self._find_multi_token_nnp(ne_chunk_tree) 
         
         ne_chunk_list = self._merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
         print(ne_chunk_list)
+>>>>>>> flask_webapp_2
         tokens = [] #list of tagged tuples
         for token in ne_chunk_list:
             if type(token) is nltk.tree.Tree:            
@@ -46,10 +61,18 @@ class PhraseMaker:
                 if (token[0] in self._keywords):                
                     token = (token[0], self._keywords[token[0]])
                 tokens.append(token)
+<<<<<<< HEAD
+                
+        #if (line_num in bluh):
+            #print(str(line_num)+". "+str(tokens))  
+            
+        phrase = Phrase(tokens)    
+=======
         
         #print(tokens)
         phrase = Phrase(tokens)  
         
+>>>>>>> flask_webapp_2
         return phrase 
     
     #input: "ne_chunk_tree" - nltk tree of tuples and/or trees containing nltk tokens, "merge_tokens" - a list of int tuples

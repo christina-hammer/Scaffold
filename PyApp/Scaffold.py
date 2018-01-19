@@ -1,5 +1,5 @@
 #Chrstina Hammer 
-#Last Edit: 11/15/2017
+#Last Edit: 12/13/2017
 #Scaffold.py
 
 #holds the final breakdown, so to speak
@@ -57,7 +57,11 @@ class Scaffold:
     def get_article(self):
         a = ""
         for i in range(0, len(self.article)):
-            a = a + str(i+1) + ". " + self.article[i] + "\n"
+            a = a + str(i+1) + ". "
+            if i < 10:
+                a = a + " "
+                
+            a = a + self.article[i] + "\n"
         return a
     
     def display(self, configuration):
