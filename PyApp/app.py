@@ -1,5 +1,5 @@
 #Christina Hammer
-#Last Edit: 12/18/2017
+#Last Edit: 1/18/2018
 #app.py
 
 from flask import Flask
@@ -32,7 +32,7 @@ def process_input():
 
 @app.route("/tutorial")
 def tutorial_page():    
-    return render_template("about.html")
+    return render_template("tutorial.html")
 
 @app.route("/gh")
 def github_page():
