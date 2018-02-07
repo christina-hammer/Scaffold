@@ -108,6 +108,7 @@ class ScaffoldMaker:
     
            
     def create_scaffold(self, phrase_strings):
+        
         scaffold = Scaffold()
                 
         for i in range(0, len(phrase_strings)):
@@ -125,8 +126,9 @@ class ScaffoldMaker:
                 scaffold.datetimes.append(i)
             if phrase.is_quote:
                 scaffold.quotes.append(i)
+            
                 
-        #print(self._persons)
+        
         scaff_persons = {}
         
         for p in self._persons:
@@ -144,5 +146,5 @@ class ScaffoldMaker:
         
         scaffold.longest_entry = self._longest_entry
         self._longest_entry = 0
-
+        
         return scaffold

@@ -24,7 +24,7 @@ def clean_non_english_punc(string_):
 def create_scaffold(article_contents):
         
     phrase_strings = parse_and_tokenize_document_body(article_contents) 
-    
+     
     scaffold_maker = ScaffoldMaker()
         
     #takes in a list of strings (where each string is a phrase in the article)

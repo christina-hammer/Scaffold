@@ -1,14 +1,19 @@
-#Christina Hammer
-#Last Edit: 1/18/2018
+#Christina Hammer w/ code from 
+#Scott Rodkey (for database components) - https://medium.com/@rodkey/deploying-a-flask-application-on-aws-a72daba6bb80
+
+#Last Edit: 2/06/2018
 #app.py
 
 from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
+from application import db
+from application.models import Data
 from create_scaffold import *
 
 app = Flask(__name__)
+#application.secret_key = '...'
 
 @app.route("/")
 def initial():
@@ -17,9 +22,19 @@ def initial():
 @app.route("/", methods = ['POST'])
 def process_input():
     
+
     text_ = request.form['article']
-           
+    
+    try:     
+        db.session.add(text_)
+        db.session.commit()        
+        db.session.close()
+    except:
+        db.session.rollback()
+    
+    
     scaffold = create_scaffold(text_)
+    
     p = scaffold.get_persons()
     l = scaffold.get_locations()
     s = scaffold.get_named_entities()

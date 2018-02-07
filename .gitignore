@@ -67,3 +67,7 @@ input/
 manual_scaffolds/
 nltk_testing/
 output/
+
+scaffold-app/
+no-flask-backend/
+PyApp/config.py

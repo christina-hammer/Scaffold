@@ -3,10 +3,12 @@
 #PhraseMaker.py
 
 from Phrase import *
+from nltk import ne_chunk
 import nltk
 import re
 import string
 import json
+
 
 #input: none
 #output: dictionary of string,string pairs
@@ -31,9 +33,15 @@ class PhraseMaker:
     def create_phrase(self, phrase_str): 
         
         tokenized_phrase = nltk.word_tokenize(phrase_str)
+        
         tagged_phrase = nltk.pos_tag(tokenized_phrase)
+        print("before ne_chunk")
+        print(tokenized_phrase
+            )
         ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
+        print("after the nltk hood")
         print(ne_chunk_tree)
+
         merge_tokens = self._find_multi_token_nnp(ne_chunk_tree) 
         
         ne_chunk_list = self._merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
