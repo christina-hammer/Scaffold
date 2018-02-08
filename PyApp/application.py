@@ -12,14 +12,14 @@ from application import db
 from application.models import Data
 from create_scaffold import *
 
-app = Flask(__name__)
+application = Flask(__name__)
 #application.secret_key = '...'
 
-@app.route("/")
+@application.route("/")
 def initial():
     return render_template("index.html", original_text="")
 
-@app.route("/", methods = ['POST'])
+@application.route("/", methods = ['POST'])
 def process_input():
     
 
@@ -45,14 +45,14 @@ def process_input():
     
     return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_)
 
-@app.route("/tutorial")
+@application.route("/tutorial")
 def tutorial_page():    
     return render_template("tutorial.html")
 
-@app.route("/gh")
+@application.route("/gh")
 def github_page():
     return redirect("http://christina-hammer.github.io/Scaffold")
 
 if __name__ == "__main__":
-    app.run()
+    application.run()
 
