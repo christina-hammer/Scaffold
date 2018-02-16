@@ -1,7 +1,7 @@
 #Christina Hammer w/ code from 
 #Scott Rodkey (for database components) - https://medium.com/@rodkey/deploying-a-flask-application-on-aws-a72daba6bb80
 
-#Last Edit: 2/06/2018
+#Last Edit: 2/08/2018
 #app.py
 
 from flask import Flask
@@ -14,36 +14,41 @@ from create_scaffold import *
 
 application = Flask(__name__)
 #application.secret_key = '...'
+#application.debug=True
+#@application.route("/")
+#def initial():
+    #return render_template("index.html", original_text="")
 
-@application.route("/")
-def initial():
-    return render_template("index.html", original_text="")
-
-@application.route("/", methods = ['POST'])
+@application.route("/", methods = ['GET', 'POST'])
 def process_input():
-    
 
-    text_ = request.form['article']
+    #print("on the homepage!")
     
-    try:     
-        db.session.add(text_)
-        db.session.commit()        
-        db.session.close()
-    except:
-        db.session.rollback()
+    if request.method == 'POST':
+        #print("in post!")
+        text_ = request.form['article']
+        #print("after form request")
+        try:     
+            db.session.add(text_)
+            db.session.commit()        
+            db.session.close()
+        except:
+            db.session.rollback()
+        
+        #print("db populated")
+        scaffold = create_scaffold(text_)
+        
+        p = scaffold.get_persons()
+        l = scaffold.get_locations()
+        s = scaffold.get_named_entities()
+        d = scaffold.get_datetimes()
+        q = scaffold.get_quotes()
+        n = scaffold.get_num_data()
+        a = scaffold.get_article()
+        #print("scaffold created!")
+        return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_)
     
-    
-    scaffold = create_scaffold(text_)
-    
-    p = scaffold.get_persons()
-    l = scaffold.get_locations()
-    s = scaffold.get_named_entities()
-    d = scaffold.get_datetimes()
-    q = scaffold.get_quotes()
-    n = scaffold.get_num_data()
-    a = scaffold.get_article()
-    
-    return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_)
+    return render_template("index.html", original_text="")
 
 @application.route("/tutorial")
 def tutorial_page():    
