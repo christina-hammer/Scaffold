@@ -35,16 +35,13 @@ class PhraseMaker:
         tokenized_phrase = nltk.word_tokenize(phrase_str)
         
         tagged_phrase = nltk.pos_tag(tokenized_phrase)
-        #print("before ne_chunk")
-        #print(tokenized_phrase)
+        
         ne_chunk_tree = nltk.ne_chunk(tagged_phrase)
-        #print("after the nltk hood")
-        #print(ne_chunk_tree)
-
+        
         merge_tokens = self._find_multi_token_nnp(ne_chunk_tree) 
         
         ne_chunk_list = self._merge_tokens_and_flatten(ne_chunk_tree, merge_tokens)        
-        #print(ne_chunk_list)
+        
         tokens = [] #list of tagged tuples
         for token in ne_chunk_list:
             if type(token) is nltk.tree.Tree:            
@@ -54,7 +51,6 @@ class PhraseMaker:
                     token = (token[0], self._keywords[token[0]])
                 tokens.append(token)
         
-        #print(tokens)
         phrase = Phrase(tokens)  
         
         return phrase 
@@ -83,7 +79,7 @@ class PhraseMaker:
                         for t in ne_chunk_tree[l]:
                             merge_text = merge_text + t[0] + " "
                     else:
-                        #print(merge_text + " + " + str(ne_chunk_tree[r]))
+
                         merge_text = merge_text + ne_chunk_tree[l][0] + " "
                     l = l + 1
                 

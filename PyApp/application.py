@@ -1,7 +1,7 @@
 #Christina Hammer w/ code from 
 #Scott Rodkey (for database components) - https://medium.com/@rodkey/deploying-a-flask-application-on-aws-a72daba6bb80
 
-#Last Edit: 2/08/2018
+#Last Edit: 2/15/2018
 #app.py
 
 from flask import Flask
@@ -13,21 +13,14 @@ from application.models import Data
 from create_scaffold import *
 
 application = Flask(__name__)
-#application.secret_key = '...'
 #application.debug=True
-#@application.route("/")
-#def initial():
-    #return render_template("index.html", original_text="")
 
 @application.route("/", methods = ['GET', 'POST'])
 def process_input():
-
-    #print("on the homepage!")
     
-    if request.method == 'POST':
-        #print("in post!")
+    if request.method == 'POST':        
         text_ = request.form['article']
-        #print("after form request")
+        
         try:     
             db.session.add(text_)
             db.session.commit()        
@@ -35,7 +28,6 @@ def process_input():
         except:
             db.session.rollback()
         
-        #print("db populated")
         scaffold = create_scaffold(text_)
         
         p = scaffold.get_persons()
@@ -45,7 +37,7 @@ def process_input():
         q = scaffold.get_quotes()
         n = scaffold.get_num_data()
         a = scaffold.get_article()
-        #print("scaffold created!")
+
         return render_template("results.html", people = p, locations = l, subj = s, dt = d, quotes = q, num = n, article = a, original_text = text_)
     
     return render_template("index.html", original_text="")

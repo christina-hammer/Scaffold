@@ -35,7 +35,7 @@ class ScaffoldMaker:
         return 
     
     def _add_psn(self, new_entry, line_number):
-        #print(new_entry)
+
         if (type(new_entry) is str):
             
             if not(new_entry in self._persons):
@@ -68,7 +68,7 @@ class ScaffoldMaker:
             if 0 < float(tokens[index][0]) and float(tokens[index][0]) < 13:        
                 return True  
         elif re.fullmatch('[0-9]{4}', tokens[index][0]):
-            #print(tokens[index][0])
+            
             return True
         
         return False     
